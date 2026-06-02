@@ -398,8 +398,11 @@ function buildCanvas(){
     var grd=ctx.createRadialGradient(W*.2,0,0,W*.2,0,W*.6);
     grd.addColorStop(0,'rgba(26,86,219,.18)');grd.addColorStop(1,'transparent');
     ctx.fillStyle=grd;ctx.fillRect(0,0,W,totalH);
+    var nombre=document.getElementById('userName').value.trim();
     ctx.fillStyle='#00c85a';ctx.font='bold 38px sans-serif';ctx.textAlign='center';
     ctx.fillText('MUNDIAL 2026',W/2,46);
+    ctx.fillStyle='#f0f2f8';ctx.font='500 15px sans-serif';ctx.textAlign='left';
+    ctx.fillText(nombre,pad,42);
     ctx.fillStyle='#8a94a8';ctx.font='12px sans-serif';
     ctx.fillText('CLASIFICADOS - FASE DE GRUPOS',W/2,64);
 
