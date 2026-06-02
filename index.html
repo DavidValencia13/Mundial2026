@@ -61,21 +61,24 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 .ter-info{font-size:12px;color:var(--txt2);background:rgba(245,166,35,.07);
   border:1px solid rgba(245,166,35,.2);border-radius:var(--r);padding:10px 14px;margin-bottom:10px}
 .ter-list{display:flex;flex-direction:column;gap:6px}
-.ter-row{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--bd);
-  border-radius:8px;padding:9px 13px;cursor:grab;user-select:none;transition:border-color .15s,background .15s}
-.ter-row:active{cursor:grabbing}
-.ter-row.dragging{opacity:.35}
-.ter-row.drag-over{border-color:var(--blue);background:rgba(26,86,219,.1)}
-.drag-dots{display:flex;flex-direction:column;gap:2.5px}
-.drag-dots span{display:block;width:14px;height:1.5px;background:var(--txt2);border-radius:1px}
+/* tercero row - ahora con botones arriba/abajo */
+.ter-row{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--bd);
+  border-radius:8px;padding:8px 12px}
 .ter-rank{font-family:var(--display);font-size:18px;min-width:24px}
 .rank-a{color:var(--green)}.rank-o{color:var(--red)}
-.ter-flag{font-size:20px;line-height:1}
+.ter-flag{font-size:20px;line-height:1;display:flex;align-items:center}
 .ter-name{flex:1;font-size:13px;font-weight:500}
 .ter-grp{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--txt2);background:var(--bg3);padding:2px 7px;border-radius:4px}
 .ab{font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border-radius:4px}
 .ab.y{background:rgba(0,200,90,.12);color:var(--green);border:1px solid rgba(0,200,90,.25)}
 .ab.n{background:rgba(229,57,53,.1);color:var(--red);border:1px solid rgba(229,57,53,.2)}
+/* botones subir bajar */
+.move-btns{display:flex;flex-direction:column;gap:3px}
+.move-btn{background:var(--bg3);border:1px solid var(--bd);color:var(--txt2);
+  width:26px;height:22px;border-radius:4px;cursor:pointer;font-size:12px;
+  display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
+.move-btn:hover{background:rgba(255,255,255,.1);color:var(--txt)}
+.move-btn:disabled{opacity:.2;cursor:default}
 .empty-t{font-size:13px;color:var(--txt2);padding:10px 0;font-style:italic}
 .reset-row{display:flex;justify-content:flex-end;margin-bottom:.5rem}
 .btn-reset{background:transparent;color:var(--txt2);border:1px solid var(--bd);
@@ -103,7 +106,7 @@ canvas{display:none}
 <header class="hdr">
   <div class="hdr-badge">FIFA World Cup</div>
   <h1>MUNDIAL <span>2026</span></h1>
-  <p>Toca cada selección para asignar su posición final · Arrastra los terceros para ordenarlos</p>
+  <p>Toca cada seleccion para asignar su posicion final</p>
 </header>
 <div class="wrap">
   <div class="reset-row"><button class="btn-reset" onclick="resetAll()">&#8635; Reiniciar todo</button></div>
@@ -111,7 +114,7 @@ canvas{display:none}
   <div class="grid" id="grid"></div>
   <div class="ter-wrap">
     <div class="sec">Mejores terceros</div>
-    <div class="ter-info">&#127; Los terceros aparecen aqui automaticamente. Arrastra para ordenar del mejor al peor &#8212; los primeros <strong>8</strong> clasifican.</div>
+    <div class="ter-info">Usa las flechas &#8593; &#8595; para ordenar del mejor al peor tercero. Los primeros <strong>8</strong> clasifican.</div>
     <div class="ter-list" id="terList"></div>
   </div>
   <div class="share-fixed">
@@ -120,30 +123,38 @@ canvas{display:none}
 </div>
 <canvas id="cv"></canvas>
 <script>
-// Banderas usando URLs de imagen de twemoji (evita problemas de encoding)
-function flag(code){
-  // code = ISO 2-letter country code
-  var base = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/';
-  var map = {
-    'MX':'1f1f2-1f1fd','KR':'1f1f0-1f1f7','ZA':'1f1ff-1f1e6','CZ':'1f1e8-1f1ff',
-    'CA':'1f1e8-1f1e6','CH':'1f1e8-1f1ed','QA':'1f1f6-1f1e6','BA':'1f1e7-1f1e6',
-    'BR':'1f1e7-1f1f7','MA':'1f1f2-1f1e6','SCT':'1f3f4','HT':'1f1ed-1f1f9',
-    'US':'1f1fa-1f1f8','PY':'1f1f5-1f1fe','AU':'1f1e6-1f1fa','TR':'1f1f9-1f1f7',
-    'DE':'1f1e9-1f1ea','EC':'1f1ea-1f1e8','CI':'1f1e8-1f1ee','CW':'1f1e8-1f1fc',
-    'NL':'1f1f3-1f1f1','JP':'1f1ef-1f1f5','TN':'1f1f9-1f1f3','SE':'1f1f8-1f1ea',
-    'BE':'1f1e7-1f1ea','EG':'1f1ea-1f1ec','IR':'1f1ee-1f1f7','NZ':'1f1f3-1f1ff',
-    'ES':'1f1ea-1f1f8','UY':'1f1fa-1f1fe','SA':'1f1f8-1f1e6','CV':'1f1e8-1f1fb',
-    'FR':'1f1eb-1f1f7','SN':'1f1f8-1f1f3','NO':'1f1f3-1f1f4','IQ':'1f1ee-1f1f6',
-    'AR':'1f1e6-1f1f7','AT':'1f1e6-1f1f9','DZ':'1f1e9-1f1ff','JO':'1f1ef-1f1f4',
-    'PT':'1f1f5-1f1f9','CO':'1f1e8-1f1f4','UZ':'1f1fa-1f1ff','CD':'1f1e8-1f1e9',
-    'ENG':'1f3f4','HR':'1f1ed-1f1f7','GH':'1f1ec-1f1ed','PA':'1f1f5-1f1e6'
-  };
-  var code2 = map[code];
-  if(!code2) return '<span style="font-size:11px;color:#8a94a8">'+code+'</span>';
-  return '<img src="'+base+code2+'.png" style="width:22px;height:22px;object-fit:contain;vertical-align:middle" loading="lazy">';
+var TWEMOJI = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/';
+var FLAGMAP = {
+  'MX':'1f1f2-1f1fd','KR':'1f1f0-1f1f7','ZA':'1f1ff-1f1e6','CZ':'1f1e8-1f1ff',
+  'CA':'1f1e8-1f1e6','CH':'1f1e8-1f1ed','QA':'1f1f6-1f1e6','BA':'1f1e7-1f1e6',
+  'BR':'1f1e7-1f1f7','MA':'1f1f2-1f1e6','HT':'1f1ed-1f1f9',
+  'US':'1f1fa-1f1f8','PY':'1f1f5-1f1fe','AU':'1f1e6-1f1fa','TR':'1f1f9-1f1f7',
+  'DE':'1f1e9-1f1ea','EC':'1f1ea-1f1e8','CI':'1f1e8-1f1ee','CW':'1f1e8-1f1fc',
+  'NL':'1f1f3-1f1f1','JP':'1f1ef-1f1f5','TN':'1f1f9-1f1f3','SE':'1f1f8-1f1ea',
+  'BE':'1f1e7-1f1ea','EG':'1f1ea-1f1ec','IR':'1f1ee-1f1f7','NZ':'1f1f3-1f1ff',
+  'ES':'1f1ea-1f1f8','UY':'1f1fa-1f1fe','SA':'1f1f8-1f1e6','CV':'1f1e8-1f1fb',
+  'FR':'1f1eb-1f1f7','SN':'1f1f8-1f1f3','NO':'1f1f3-1f1f4','IQ':'1f1ee-1f1f6',
+  'AR':'1f1e6-1f1f7','AT':'1f1e6-1f1f9','DZ':'1f1e9-1f1ff','JO':'1f1ef-1f1f4',
+  'PT':'1f1f5-1f1f9','CO':'1f1e8-1f1f4','UZ':'1f1fa-1f1ff','CD':'1f1e8-1f1e9',
+  'HR':'1f1ed-1f1f7','GH':'1f1ec-1f1ed','PA':'1f1f5-1f1e6',
+  // Escocia e Inglaterra — usar bandera GB como fallback claro
+  'SCT':'1f3f4-e0067-e0062-e0073-e0063-e0074-e007f',
+  'ENG':'1f3f4-e0067-e0062-e0065-e006e-e0067-e007f'
+};
+
+// Para Escocia e Inglaterra usamos flagcdn que tiene soporte especifico
+var OVERRIDE = {
+  'SCT': 'https://flagcdn.com/w40/gb-sct.png',
+  'ENG': 'https://flagcdn.com/w40/gb-eng.png'
+};
+
+function flagImg(code, size){
+  size = size || 22;
+  var src = OVERRIDE[code] ? OVERRIDE[code] : (TWEMOJI + (FLAGMAP[code]||'') + '.png');
+  return '<img src="'+src+'" style="width:'+size+'px;height:'+size+'px;object-fit:contain;vertical-align:middle;border-radius:2px" loading="lazy">';
 }
 
-const GROUPS = [
+var GROUPS = [
   {l:'A',teams:[{n:'M\u00e9xico',c:'MX'},{n:'Corea del Sur',c:'KR'},{n:'Sud\u00e1frica',c:'ZA'},{n:'Rep. Checa',c:'CZ'}]},
   {l:'B',teams:[{n:'Canad\u00e1',c:'CA'},{n:'Suiza',c:'CH'},{n:'Catar',c:'QA'},{n:'Bosnia-Herz.',c:'BA'}]},
   {l:'C',teams:[{n:'Brasil',c:'BR'},{n:'Marruecos',c:'MA'},{n:'Escocia',c:'SCT'},{n:'Hait\u00ed',c:'HT'}]},
@@ -151,31 +162,30 @@ const GROUPS = [
   {l:'E',teams:[{n:'Alemania',c:'DE'},{n:'Ecuador',c:'EC'},{n:'C. de Marfil',c:'CI'},{n:'Curazao',c:'CW'}]},
   {l:'F',teams:[{n:'Pa\u00edses Bajos',c:'NL'},{n:'Jap\u00f3n',c:'JP'},{n:'T\u00fanez',c:'TN'},{n:'Suecia',c:'SE'}]},
   {l:'G',teams:[{n:'B\u00e9lgica',c:'BE'},{n:'Egipto',c:'EG'},{n:'Ir\u00e1n',c:'IR'},{n:'Nueva Zelanda',c:'NZ'}]},
-  {l:'H',teams:[{n:'Espa\u00f1a',c:'ES'},{n:'Uruguay',c:'UY'},{n:'Arabia Saudi',c:'SA'},{n:'Cabo Verde',c:'CV'}]},
+  {l:'H',teams:[{n:'Espa\u00f1a',c:'ES'},{n:'Uruguay',c:'UY'},{n:'Arabia Saud\u00ed',c:'SA'},{n:'Cabo Verde',c:'CV'}]},
   {l:'I',teams:[{n:'Francia',c:'FR'},{n:'Senegal',c:'SN'},{n:'Noruega',c:'NO'},{n:'Irak',c:'IQ'}]},
   {l:'J',teams:[{n:'Argentina',c:'AR'},{n:'Austria',c:'AT'},{n:'Argelia',c:'DZ'},{n:'Jordania',c:'JO'}]},
   {l:'K',teams:[{n:'Portugal',c:'PT'},{n:'Colombia',c:'CO'},{n:'Uzbekist\u00e1n',c:'UZ'},{n:'RD del Congo',c:'CD'}]},
   {l:'L',teams:[{n:'Inglaterra',c:'ENG'},{n:'Croacia',c:'HR'},{n:'Ghana',c:'GH'},{n:'Panam\u00e1',c:'PA'}]}
 ];
 
-const state = {};
-GROUPS.forEach(g => state[g.l] = [0,0,0,0]);
-let terOrder = GROUPS.map(g => g.l);
-let dragSrc = null;
-const posLbl = ['','1\u00b0','2\u00b0','3\u00b0','\u00d7'];
-const posClass = ['','s1','s2','s3','s4'];
+var state = {};
+GROUPS.forEach(function(g){ state[g.l]=[0,0,0,0]; });
+var terOrder = GROUPS.map(function(g){ return g.l; });
+var posLbl = ['','1\u00b0','2\u00b0','3\u00b0','\u00d7'];
+var posClass = ['','s1','s2','s3','s4'];
 
 function buildGroups(){
-  const grid = document.getElementById('grid');
-  GROUPS.forEach(g => {
-    const card = document.createElement('div');
+  var grid = document.getElementById('grid');
+  GROUPS.forEach(function(g){
+    var card = document.createElement('div');
     card.className = 'gcard';
     card.innerHTML = '<div class="ghdr"><span class="gl">'+g.l+'</span><span>GRUPO '+g.l+'</span></div>';
-    g.teams.forEach((t,i) => {
-      const btn = document.createElement('button');
+    g.teams.forEach(function(t,i){
+      var btn = document.createElement('button');
       btn.className = 'team-btn';
       btn.dataset.g = g.l; btn.dataset.i = i;
-      btn.innerHTML = '<span class="flag">'+flag(t.c)+'</span><span class="tname">'+t.n+'</span><span class="ring"></span>';
+      btn.innerHTML = '<span class="flag">'+flagImg(t.c)+'</span><span class="tname">'+t.n+'</span><span class="ring"></span>';
       btn.addEventListener('click', function(){ onTeamClick(g.l, i); });
       card.appendChild(btn);
     });
@@ -189,9 +199,8 @@ function onTeamClick(letter, idx){
   var next = cur === 4 ? 0 : cur + 1;
   if(next >= 1 && next <= 3){
     var attempts = 0;
-    while(next >= 1 && next <= 3 && grp.some(function(v,j){ return j!==idx && v===next; }) && attempts < 5){
-      next = next === 3 ? 4 : next + 1;
-      attempts++;
+    while(next >= 1 && next <= 3 && grp.some(function(v,j){ return j!==idx && v===next; }) && attempts<5){
+      next = next===3 ? 4 : next+1; attempts++;
     }
   }
   grp[idx] = next;
@@ -205,18 +214,29 @@ function renderGroups(){
       var btn = document.querySelector('.team-btn[data-g="'+g.l+'"][data-i="'+i+'"]');
       if(!btn) return;
       var v = state[g.l][i];
-      btn.className = 'team-btn' + (v > 0 ? ' ' + posClass[v] : '');
-      var ring = btn.querySelector('.ring');
-      ring.textContent = v > 0 ? posLbl[v] : '';
+      btn.className = 'team-btn'+(v>0?' '+posClass[v]:'');
+      btn.querySelector('.ring').textContent = v>0 ? posLbl[v] : '';
     });
   });
 }
 
 function getThird(letter){
-  var g = GROUPS.find(function(x){ return x.l === letter; });
+  var g = GROUPS.find(function(x){ return x.l===letter; });
   var idx = state[letter].indexOf(3);
-  if(idx < 0) return null;
-  return {n: g.teams[idx].n, c: g.teams[idx].c, letter: letter};
+  if(idx<0) return null;
+  return {n:g.teams[idx].n, c:g.teams[idx].c, letter:letter};
+}
+
+function moveTerc(letter, dir){
+  var terceros = terOrder.map(function(l){ return getThird(l); }).filter(Boolean);
+  var pos = terceros.findIndex(function(t){ return t.letter===letter; });
+  var newPos = pos + dir;
+  if(newPos < 0 || newPos >= terceros.length) return;
+  // swap in terOrder
+  var idxA = terOrder.indexOf(letter);
+  var idxB = terOrder.indexOf(terceros[newPos].letter);
+  var tmp = terOrder[idxA]; terOrder[idxA]=terOrder[idxB]; terOrder[idxB]=tmp;
+  updateTerceros();
 }
 
 function updateTerceros(){
@@ -224,103 +244,75 @@ function updateTerceros(){
   list.innerHTML = '';
   var terceros = terOrder.map(function(l){ return getThird(l); }).filter(Boolean);
   if(!terceros.length){
-    list.innerHTML = '<div class="empty-t">Marca el 3er lugar de un grupo (toca hasta llegar a 3\u00b0) y aparece aqui automaticamente.</div>';
+    list.innerHTML = '<div class="empty-t">Marca el 3\u00b0 lugar en cada grupo tocando hasta llegar a 3\u00b0 y aparece aqui automaticamente.</div>';
     return;
   }
   terceros.forEach(function(t, i){
-    var adv = i < 8;
+    var adv = i<8;
     var row = document.createElement('div');
     row.className = 'ter-row';
-    row.draggable = true;
-    row.dataset.l = t.letter;
     row.innerHTML =
-      '<div class="drag-dots"><span></span><span></span><span></span></div>'+
+      '<div class="move-btns">'+
+        '<button class="move-btn" onclick="moveTerc(\''+t.letter+'\',-1)" '+(i===0?'disabled':'')+'>&#8593;</button>'+
+        '<button class="move-btn" onclick="moveTerc(\''+t.letter+'\',1)" '+(i===terceros.length-1?'disabled':'')+'>&#8595;</button>'+
+      '</div>'+
       '<span class="ter-rank '+(adv?'rank-a':'rank-o')+'">'+(i+1)+'</span>'+
-      '<span class="ter-flag">'+flag(t.c)+'</span>'+
+      '<span class="ter-flag">'+flagImg(t.c,20)+'</span>'+
       '<span class="ter-name">'+t.n+'</span>'+
       '<span class="ter-grp">GRP '+t.letter+'</span>'+
       '<span class="ab '+(adv?'y':'n')+'">'+(adv?'CLASIFICA':'ELIMINADO')+'</span>';
-    row.addEventListener('dragstart', function(e){ dragSrc=row; row.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; });
-    row.addEventListener('dragover', function(e){ e.preventDefault(); document.querySelectorAll('.ter-row').forEach(function(r){ r.classList.remove('drag-over'); }); row.classList.add('drag-over'); });
-    row.addEventListener('drop', function(e){
-      e.preventDefault();
-      if(dragSrc===row) return;
-      var si=terOrder.indexOf(dragSrc.dataset.l), ti=terOrder.indexOf(row.dataset.l);
-      terOrder.splice(si,1); terOrder.splice(ti,0,dragSrc.dataset.l);
-      updateTerceros();
-    });
-    row.addEventListener('dragend', function(){ document.querySelectorAll('.ter-row').forEach(function(r){ r.classList.remove('dragging','drag-over'); }); });
     list.appendChild(row);
   });
 }
 
-// touch support
-var touchDragEl=null, touchClone=null;
-document.addEventListener('touchstart',function(e){
-  var row=e.target.closest('.ter-row'); if(!row) return;
-  touchDragEl=row;
-  touchClone=row.cloneNode(true);
-  touchClone.style.cssText='position:fixed;opacity:.7;pointer-events:none;z-index:999;width:'+row.offsetWidth+'px;left:'+row.getBoundingClientRect().left+'px;top:'+row.getBoundingClientRect().top+'px;background:#1c2333;border-radius:8px;';
-  document.body.appendChild(touchClone);
-},{passive:true});
-document.addEventListener('touchmove',function(e){
-  if(!touchClone) return;
-  var t=e.touches[0];
-  touchClone.style.left=(t.clientX-touchClone.offsetWidth/2)+'px';
-  touchClone.style.top=(t.clientY-24)+'px';
-  document.querySelectorAll('.ter-row').forEach(function(r){ r.classList.remove('drag-over'); });
-  var el=document.elementFromPoint(t.clientX,t.clientY);
-  var over=el&&el.closest('.ter-row');
-  if(over&&over!==touchDragEl) over.classList.add('drag-over');
-},{passive:true});
-document.addEventListener('touchend',function(e){
-  if(!touchDragEl||!touchClone) return;
-  var t=e.changedTouches[0];
-  var el=document.elementFromPoint(t.clientX,t.clientY);
-  var over=el&&el.closest('.ter-row');
-  if(over&&over!==touchDragEl){
-    var si=terOrder.indexOf(touchDragEl.dataset.l), ti=terOrder.indexOf(over.dataset.l);
-    terOrder.splice(si,1); terOrder.splice(ti,0,touchDragEl.dataset.l);
-    updateTerceros();
-  }
-  touchClone.remove(); touchClone=null; touchDragEl=null;
-  document.querySelectorAll('.ter-row').forEach(function(r){ r.classList.remove('drag-over'); });
-});
-
 function resetAll(){
   GROUPS.forEach(function(g){ state[g.l]=[0,0,0,0]; });
-  terOrder=GROUPS.map(function(g){ return g.l; });
+  terOrder = GROUPS.map(function(g){ return g.l; });
   renderGroups(); updateTerceros();
 }
 
 async function compartir(){
   document.getElementById('overlay').classList.add('show');
-  await new Promise(function(r){ setTimeout(r,80); });
+  await new Promise(function(r){ setTimeout(r,100); });
   try {
     var dataUrl = await buildCanvas();
     document.getElementById('overlay').classList.remove('show');
     var blob = await (await fetch(dataUrl)).blob();
     var file = new File([blob],'mundial2026.png',{type:'image/png'});
-    var isMob=/Android|iPhone|iPad/i.test(navigator.userAgent);
+    var isMob = /Android|iPhone|iPad/i.test(navigator.userAgent);
     if(isMob && navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file],title:'Mundial 2026',text:'\ud83c\udfc6 Mis picks de la fase de grupos del Mundial 2026'});
+      // solo imagen, sin texto
+      await navigator.share({files:[file]});
     } else {
       var a=document.createElement('a'); a.download='mundial2026.png'; a.href=dataUrl; a.click();
-      setTimeout(function(){ window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('\ud83c\udfc6 Clasificados Fase de Grupos Mundial 2026'),'_blank'); },800);
+      setTimeout(function(){ window.open('https://wa.me/','_blank'); },800);
     }
   } catch(err){
     document.getElementById('overlay').classList.remove('show');
   }
 }
 
+var imgCache = {};
+function loadImg(code){
+  return new Promise(function(res){
+    if(imgCache[code]){ res(imgCache[code]); return; }
+    var src = OVERRIDE[code] ? OVERRIDE[code] : (TWEMOJI+(FLAGMAP[code]||'')+'.png');
+    if(!FLAGMAP[code] && !OVERRIDE[code]){ res(null); return; }
+    var img=new Image(); img.crossOrigin='anonymous';
+    img.onload=function(){ imgCache[code]=img; res(img); };
+    img.onerror=function(){ res(null); };
+    img.src=src;
+  });
+}
+
 function buildCanvas(){
   return new Promise(function(resolve){
-    var cv=document.getElementById('cv');
     var W=900,pad=22,cols=4,colW=(W-pad*2-(cols-1)*10)/cols;
     var rowH=24,hdrH=38,groupH=hdrH+4*rowH+14;
     var terceros=terOrder.map(function(l){ return getThird(l); }).filter(Boolean);
     var terH=terceros.length?54+terceros.length*30+16:0;
     var totalH=pad+68+3*(groupH+12)+terH+36;
+    var cv=document.getElementById('cv');
     cv.width=W; cv.height=totalH;
     var ctx=cv.getContext('2d');
     ctx.fillStyle='#0a0e1a'; ctx.fillRect(0,0,W,totalH);
@@ -342,43 +334,14 @@ function buildCanvas(){
     }
 
     var posColors=['','#00c85a','#1a56db','#f5a623','#e53935'];
-    var imgCache={};
-
-    function loadFlagImg(code){
-      return new Promise(function(res){
-        if(imgCache[code]){ res(imgCache[code]); return; }
-        var base='https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/';
-        var map={
-          'MX':'1f1f2-1f1fd','KR':'1f1f0-1f1f7','ZA':'1f1ff-1f1e6','CZ':'1f1e8-1f1ff',
-          'CA':'1f1e8-1f1e6','CH':'1f1e8-1f1ed','QA':'1f1f6-1f1e6','BA':'1f1e7-1f1e6',
-          'BR':'1f1e7-1f1f7','MA':'1f1f2-1f1e6','SCT':'1f3f4','HT':'1f1ed-1f1f9',
-          'US':'1f1fa-1f1f8','PY':'1f1f5-1f1fe','AU':'1f1e6-1f1fa','TR':'1f1f9-1f1f7',
-          'DE':'1f1e9-1f1ea','EC':'1f1ea-1f1e8','CI':'1f1e8-1f1ee','CW':'1f1e8-1f1fc',
-          'NL':'1f1f3-1f1f1','JP':'1f1ef-1f1f5','TN':'1f1f9-1f1f3','SE':'1f1f8-1f1ea',
-          'BE':'1f1e7-1f1ea','EG':'1f1ea-1f1ec','IR':'1f1ee-1f1f7','NZ':'1f1f3-1f1ff',
-          'ES':'1f1ea-1f1f8','UY':'1f1fa-1f1fe','SA':'1f1f8-1f1e6','CV':'1f1e8-1f1fb',
-          'FR':'1f1eb-1f1f7','SN':'1f1f8-1f1f3','NO':'1f1f3-1f1f4','IQ':'1f1ee-1f1f6',
-          'AR':'1f1e6-1f1f7','AT':'1f1e6-1f1f9','DZ':'1f1e9-1f1ff','JO':'1f1ef-1f1f4',
-          'PT':'1f1f5-1f1f9','CO':'1f1e8-1f1f4','UZ':'1f1fa-1f1ff','CD':'1f1e8-1f1e9',
-          'ENG':'1f3f4','HR':'1f1ed-1f1f7','GH':'1f1ec-1f1ed','PA':'1f1f5-1f1e6'
-        };
-        if(!map[code]){ res(null); return; }
-        var img=new Image(); img.crossOrigin='anonymous';
-        img.onload=function(){ imgCache[code]=img; res(img); };
-        img.onerror=function(){ res(null); };
-        img.src=base+map[code]+'.png';
-      });
-    }
-
-    // collect all codes needed
     var allCodes=[];
     GROUPS.forEach(function(g){ g.teams.forEach(function(t){ allCodes.push(t.c); }); });
     terceros.forEach(function(t){ allCodes.push(t.c); });
 
-    Promise.all(allCodes.map(loadFlagImg)).then(function(){
+    Promise.all(allCodes.map(loadImg)).then(function(){
       GROUPS.forEach(function(g,idx){
-        var col=idx%cols, row=Math.floor(idx/cols);
-        var x=pad+col*(colW+10), y=pad+78+row*(groupH+12);
+        var col=idx%cols,row=Math.floor(idx/cols);
+        var x=pad+col*(colW+10),y=pad+78+row*(groupH+12);
         rr(x,y,colW,groupH,8,'#111827','#1c2333');
         ctx.fillStyle='#1c2333';
         ctx.beginPath();ctx.moveTo(x+8,y);ctx.lineTo(x+colW-8,y);
@@ -392,16 +355,15 @@ function buildCanvas(){
         ctx.strokeStyle='#1c2333';ctx.lineWidth=.5;
         ctx.beginPath();ctx.moveTo(x+6,y+hdrH-4);ctx.lineTo(x+colW-6,y+hdrH-4);ctx.stroke();
         g.teams.forEach(function(t,ti){
-          var pos=state[g.l][ti], ey=y+hdrH+ti*rowH+16;
-          var fimg=imgCache[t.c];
-          if(fimg) ctx.drawImage(fimg,x+6,ey-14,18,18);
-          else { ctx.fillStyle='#8a94a8';ctx.font='9px sans-serif';ctx.fillText(t.c,x+6,ey); }
+          var pos=state[g.l][ti],ey=y+hdrH+ti*rowH+16;
+          var fi=imgCache[t.c];
+          if(fi) ctx.drawImage(fi,x+6,ey-14,18,18);
+          else{ctx.fillStyle='#8a94a8';ctx.font='9px sans-serif';ctx.fillText(t.c,x+6,ey);}
           ctx.fillStyle=pos>0?'#f0f2f8':'#3a4255';
-          ctx.font=(pos>0?'500 ':'400 ')+'11px sans-serif';
-          var nm=t.n;
           ctx.font='11px sans-serif';
+          var nm=t.n;
           while(ctx.measureText(nm).width>colW-66&&nm.length>3) nm=nm.slice(0,-1)+'...';
-          ctx.textAlign='left';ctx.fillText(nm,x+30,ey);
+          ctx.textAlign='left'; ctx.fillText(nm,x+30,ey);
           if(pos>0){
             ctx.fillStyle=posColors[pos];ctx.font='bold 10px sans-serif';ctx.textAlign='right';
             ctx.fillText(pos===4?'x':posLbl[pos],x+colW-7,ey);
@@ -409,7 +371,6 @@ function buildCanvas(){
           }
         });
       });
-
       if(terceros.length){
         var ty=pad+78+3*(groupH+12)+10;
         ctx.fillStyle='#f5a623';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
@@ -417,13 +378,13 @@ function buildCanvas(){
         ctx.strokeStyle='rgba(245,166,35,.3)';ctx.lineWidth=.5;
         ctx.beginPath();ctx.moveTo(pad+185,ty+13);ctx.lineTo(W-pad,ty+13);ctx.stroke();
         terceros.forEach(function(t,i){
-          var ry=ty+44+i*30, adv=i<8;
+          var ry=ty+44+i*30,adv=i<8;
           rr(pad,ry-18,W-pad*2,26,5,adv?'rgba(0,200,90,.07)':'rgba(229,57,53,.07)','transparent');
           ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
           ctx.fillText(i+1,pad+8,ry);
-          var fimg=imgCache[t.c];
-          if(fimg) ctx.drawImage(fimg,pad+28,ry-14,18,18);
-          ctx.fillStyle='#f0f2f8';ctx.font='500 12px sans-serif';ctx.textAlign='left';
+          var fi=imgCache[t.c];
+          if(fi) ctx.drawImage(fi,pad+28,ry-14,18,18);
+          ctx.fillStyle='#f0f2f8';ctx.font='500 12px sans-serif';
           ctx.fillText(t.n,pad+52,ry);
           ctx.fillStyle='#8a94a8';ctx.font='10px sans-serif';ctx.textAlign='right';
           ctx.fillText('GRP '+t.letter,W-pad-90,ry);
