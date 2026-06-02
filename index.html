@@ -351,6 +351,20 @@ function resetAll(){
 async function compartir(){
   var nombre=document.getElementById('userName').value.trim();
   if(!nombre){document.getElementById('userName').focus();document.getElementById('userName').style.borderColor='var(--red)';return;}
+  // validar que todos los grupos tengan 1ro y 2do
+  var faltanGrupos=[];
+  GROUPS.forEach(function(g){
+  var s=state[g.l];
+  if(s.indexOf(1)<0||s.indexOf(2)<0) faltanGrupos.push('Grupo '+g.l);
+  });
+  if(faltanGrupos.length>0){
+  alert('Faltan clasificados en: '+faltanGrupos.join(', '));return;
+  }
+// validar que haya exactamente 8 terceros rankeados
+var totalTerceros=GROUPS.filter(function(g){return state[g.l].indexOf(3)>=0;}).length;
+if(totalTerceros<8||terRanking.length<8){
+  alert('Debes elegir el 3er lugar en minimo 8 grupos y ordenarlos en la tabla de abajo. Tienes '+totalTerceros+' terceros marcados y '+terRanking.length+' ordenados.');return;
+}
   document.getElementById('overlay').classList.add('show');
   await new Promise(function(r){setTimeout(r,100);});
   try{
