@@ -5,24 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mundial 2026 — Fase de Grupos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-:root {
-  --green: #00c85a;
-  --green-dk: #009944;
-  --blue: #1a56db;
-  --gold: #f5a623;
-  --red: #e53935;
-  --bg: #0a0e1a;
-  --bg2: #111827;
-  --bg3: #1c2333;
-  --bd: rgba(255,255,255,0.08);
-  --txt: #f0f2f8;
-  --txt2: #8a94a8;
-  --display: 'Bebas Neue', sans-serif;
-  --body: 'DM Sans', sans-serif;
-  --r: 10px;
+:root{
+  --green:#00c85a;--green-dk:#009944;--blue:#1a56db;--gold:#f5a623;--red:#e53935;
+  --bg:#0a0e1a;--bg2:#111827;--bg3:#1c2333;--bd:rgba(255,255,255,.08);
+  --txt:#f0f2f8;--txt2:#8a94a8;--r:10px;
+  --display:'Bebas Neue',sans-serif;--body:'DM Sans',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:100vh;
@@ -44,434 +34,427 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 .ghdr{background:var(--bg3);padding:7px 13px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--bd)}
 .gl{font-family:var(--display);font-size:20px;color:var(--green);line-height:1}
 .ghdr span{font-size:11px;font-weight:500;color:var(--txt2);letter-spacing:1px;text-transform:uppercase}
-/* team button */
 .team-btn{
   width:100%;display:flex;align-items:center;gap:10px;
   padding:8px 13px;border:none;background:transparent;cursor:pointer;
   border-bottom:1px solid var(--bd);transition:background .15s;text-align:left;
-  color:var(--txt);font-family:var(--body);font-size:13px;font-weight:400;
-  position:relative
+  color:var(--txt);font-family:var(--body);font-size:13px;font-weight:400
 }
 .team-btn:last-child{border-bottom:none}
 .team-btn:hover{background:rgba(255,255,255,.04)}
-.team-btn.active-1{background:rgba(0,200,90,.12)!important}
-.team-btn.active-2{background:rgba(26,86,219,.12)!important}
-.team-btn.active-3{background:rgba(245,166,35,.12)!important}
-.team-btn.active-elim{background:rgba(229,57,53,.06)!important}
-.flag{font-size:20px;line-height:1;min-width:26px;text-align:center}
+.team-btn.s1{background:rgba(0,200,90,.12)!important}
+.team-btn.s2{background:rgba(26,86,219,.12)!important}
+.team-btn.s3{background:rgba(245,166,35,.12)!important}
+.team-btn.s4{background:rgba(229,57,53,.06)!important}
+.flag{font-size:22px;line-height:1;min-width:28px;text-align:center}
 .tname{flex:1;font-size:13px}
-.pos-ring{
-  width:22px;height:22px;border-radius:50%;border:1.5px solid transparent;
+.ring{
+  width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);
   display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;transition:all .2s;color:transparent;flex-shrink:0
+  font-size:10px;font-weight:700;color:transparent;flex-shrink:0;transition:all .2s
 }
-.team-btn.active-1 .pos-ring{background:var(--green);border-color:var(--green);color:#000}
-.team-btn.active-2 .pos-ring{background:var(--blue);border-color:var(--blue);color:#fff}
-.team-btn.active-3 .pos-ring{background:var(--gold);border-color:var(--gold);color:#000}
-.team-btn.active-elim .pos-ring{background:var(--red);border-color:var(--red);color:#fff;font-size:11px}
+.s1 .ring{background:var(--green);border-color:var(--green);color:#000}
+.s2 .ring{background:var(--blue);border-color:var(--blue);color:#fff}
+.s3 .ring{background:var(--gold);border-color:var(--gold);color:#000}
+.s4 .ring{background:var(--red);border-color:var(--red);color:#fff;font-size:11px}
+
 /* terceros */
+.ter-wrap{margin-top:1.5rem}
 .ter-info{font-size:12px;color:var(--txt2);background:rgba(245,166,35,.07);
   border:1px solid rgba(245,166,35,.2);border-radius:var(--r);padding:10px 14px;margin-bottom:10px}
 .ter-list{display:flex;flex-direction:column;gap:6px}
 .ter-row{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--bd);
-  border-radius:8px;padding:8px 13px;cursor:grab;user-select:none;transition:border-color .15s,background .15s}
+  border-radius:8px;padding:9px 13px;cursor:grab;user-select:none;transition:border-color .15s,background .15s}
 .ter-row:active{cursor:grabbing}
 .ter-row.dragging{opacity:.35}
 .ter-row.drag-over{border-color:var(--blue);background:rgba(26,86,219,.1)}
 .drag-dots{display:flex;flex-direction:column;gap:2.5px}
 .drag-dots span{display:block;width:14px;height:1.5px;background:var(--txt2);border-radius:1px}
-.ter-rank{font-family:var(--display);font-size:17px;min-width:22px}
-.rank-adv{color:var(--green)} .rank-out{color:var(--red)}
-.ter-flag{font-size:18px;line-height:1}
+.ter-rank{font-family:var(--display);font-size:18px;min-width:24px}
+.rank-a{color:var(--green)}.rank-o{color:var(--red)}
+.ter-flag{font-size:20px;line-height:1}
 .ter-name{flex:1;font-size:13px;font-weight:500}
 .ter-grp{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--txt2);
   background:var(--bg3);padding:2px 7px;border-radius:4px}
-.adv-badge{font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border-radius:4px}
-.adv-badge.y{background:rgba(0,200,90,.12);color:var(--green);border:1px solid rgba(0,200,90,.25)}
-.adv-badge.n{background:rgba(229,57,53,.1);color:var(--red);border:1px solid rgba(229,57,53,.2)}
-.empty-t{font-size:13px;color:var(--txt2);padding:10px 0}
+.ab{font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border-radius:4px}
+.ab.y{background:rgba(0,200,90,.12);color:var(--green);border:1px solid rgba(0,200,90,.25)}
+.ab.n{background:rgba(229,57,53,.1);color:var(--red);border:1px solid rgba(229,57,53,.2)}
+.empty-t{font-size:13px;color:var(--txt2);padding:10px 0;font-style:italic}
+
 /* reset */
 .reset-row{display:flex;justify-content:flex-end;margin-bottom:.5rem}
 .btn-reset{background:transparent;color:var(--txt2);border:1px solid var(--bd);
   padding:5px 14px;border-radius:6px;font-family:var(--body);font-size:12px;cursor:pointer}
 .btn-reset:hover{border-color:rgba(255,255,255,.2);color:var(--txt)}
-/* generate */
-.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:2rem}
-.btn-gen{background:var(--green);color:#000;border:none;padding:12px 26px;border-radius:var(--r);
-  font-family:var(--body);font-size:14px;font-weight:600;cursor:pointer;
-  display:flex;align-items:center;gap:8px;transition:background .15s,transform .1s}
-.btn-gen:hover{background:var(--green-dk)} .btn-gen:active{transform:scale(.98)}
-.prev-sec{margin-top:1.75rem;text-align:center;display:none}
-.prev-sec img{max-width:100%;border-radius:var(--r);border:1px solid var(--bd)}
-.share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-.btn-wa{background:#25D366;color:#000;border:none;padding:10px 20px;border-radius:var(--r);
-  font-family:var(--body);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px}
-.btn-wa:hover{background:#1ebe5a}
-.btn-dl{background:transparent;color:var(--txt);border:1px solid var(--bd);padding:10px 20px;
-  border-radius:var(--r);font-family:var(--body);font-size:14px;font-weight:500;cursor:pointer;
-  display:flex;align-items:center;gap:7px}
-.btn-dl:hover{border-color:rgba(255,255,255,.25)}
+
+/* share button - big, always visible */
+.share-fixed{
+  position:sticky;bottom:1.5rem;display:flex;justify-content:center;
+  margin-top:2rem;z-index:10;pointer-events:none
+}
+.btn-share{
+  background:var(--green);color:#000;border:none;
+  padding:14px 32px;border-radius:50px;
+  font-family:var(--body);font-size:15px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:10px;
+  box-shadow:0 4px 24px rgba(0,200,90,.35);
+  transition:background .15s,transform .1s;pointer-events:all
+}
+.btn-share:hover{background:var(--green-dk)}
+.btn-share:active{transform:scale(.97)}
+
+/* loading overlay */
+.overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+  align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:16px
+}
+.overlay.show{display:flex}
+.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.1);
+  border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.overlay p{color:var(--txt2);font-size:13px}
+
 canvas{display:none}
 @media(max-width:480px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  <p>Generando imagen...</p>
+</div>
+
 <header class="hdr">
   <div class="hdr-badge">FIFA World Cup</div>
   <h1>MUNDIAL <span>2026</span></h1>
-  <p>Toca cada selección para elegir su posición final en el grupo</p>
+  <p>Toca cada selección para asignar su posición final · Arrastra los terceros para ordenarlos</p>
 </header>
+
 <div class="wrap">
   <div class="reset-row">
     <button class="btn-reset" onclick="resetAll()">↺ Reiniciar todo</button>
   </div>
+
   <div class="sec">Grupos A – L</div>
   <div class="grid" id="grid"></div>
-  <div class="sec" style="margin-top:2rem">Mejores terceros</div>
-  <div class="ter-info">⬆️ Arrastra para ordenar del mejor al peor tercero. Los primeros <strong>8</strong> clasifican a dieciseisavos.</div>
-  <div class="ter-list" id="terList"></div>
-  <div class="btn-row">
-    <button class="btn-gen" onclick="genImg()">📸 Generar imagen para compartir</button>
+
+  <div class="ter-wrap">
+    <div class="sec">Mejores terceros</div>
+    <div class="ter-info">🏅 Los terceros aparecen aquí automáticamente. Arrastra para ordenar del mejor al peor — los primeros <strong>8</strong> clasifican.</div>
+    <div class="ter-list" id="terList"></div>
   </div>
-  <canvas id="cv"></canvas>
-  <div class="prev-sec" id="prevSec">
-    <img id="prevImg" src="" alt="Resultados fase de grupos">
-    <div class="share-row">
-      <button class="btn-wa" onclick="shareWA()">💬 Compartir en WhatsApp</button>
-      <button class="btn-dl" onclick="dlImg()">⬇️ Descargar imagen</button>
-    </div>
+
+  <div class="share-fixed">
+    <button class="btn-share" onclick="compartir()">
+      💬 Compartir en WhatsApp
+    </button>
   </div>
 </div>
+
+<canvas id="cv"></canvas>
+
 <script>
 const GROUPS = [
-  { letter:'A', teams:[
-    {name:'México',       flag:'🇲🇽'},
-    {name:'Corea del Sur',flag:'🇰🇷'},
-    {name:'Sudáfrica',    flag:'🇿🇦'},
-    {name:'Rep. Checa',   flag:'🇨🇿'}
-  ]},
-  { letter:'B', teams:[
-    {name:'Canadá',       flag:'🇨🇦'},
-    {name:'Suiza',        flag:'🇨🇭'},
-    {name:'Catar',        flag:'🇶🇦'},
-    {name:'Bosnia-Herz.', flag:'🇧🇦'}
-  ]},
-  { letter:'C', teams:[
-    {name:'Brasil',       flag:'🇧🇷'},
-    {name:'Marruecos',    flag:'🇲🇦'},
-    {name:'Escocia',      flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},
-    {name:'Haití',        flag:'🇭🇹'}
-  ]},
-  { letter:'D', teams:[
-    {name:'EE. UU.',      flag:'🇺🇸'},
-    {name:'Paraguay',     flag:'🇵🇾'},
-    {name:'Australia',    flag:'🇦🇺'},
-    {name:'Turquía',      flag:'🇹🇷'}
-  ]},
-  { letter:'E', teams:[
-    {name:'Alemania',     flag:'🇩🇪'},
-    {name:'Ecuador',      flag:'🇪🇨'},
-    {name:'Costa de Marfil',flag:'🇨🇮'},
-    {name:'Curazao',      flag:'🇨🇼'}
-  ]},
-  { letter:'F', teams:[
-    {name:'Países Bajos', flag:'🇳🇱'},
-    {name:'Japón',        flag:'🇯🇵'},
-    {name:'Túnez',        flag:'🇹🇳'},
-    {name:'Suecia',       flag:'🇸🇪'}
-  ]},
-  { letter:'G', teams:[
-    {name:'Bélgica',      flag:'🇧🇪'},
-    {name:'Egipto',       flag:'🇪🇬'},
-    {name:'Irán',         flag:'🇮🇷'},
-    {name:'Nueva Zelanda',flag:'🇳🇿'}
-  ]},
-  { letter:'H', teams:[
-    {name:'España',       flag:'🇪🇸'},
-    {name:'Uruguay',      flag:'🇺🇾'},
-    {name:'Arabia Saudí', flag:'🇸🇦'},
-    {name:'Cabo Verde',   flag:'🇨🇻'}
-  ]},
-  { letter:'I', teams:[
-    {name:'Francia',      flag:'🇫🇷'},
-    {name:'Senegal',      flag:'🇸🇳'},
-    {name:'Noruega',      flag:'🇳🇴'},
-    {name:'Irak',         flag:'🇮🇶'}
-  ]},
-  { letter:'J', teams:[
-    {name:'Argentina',    flag:'🇦🇷'},
-    {name:'Austria',      flag:'🇦🇹'},
-    {name:'Argelia',      flag:'🇩🇿'},
-    {name:'Jordania',     flag:'🇯🇴'}
-  ]},
-  { letter:'K', teams:[
-    {name:'Portugal',     flag:'🇵🇹'},
-    {name:'Colombia',     flag:'🇨🇴'},
-    {name:'Uzbekistán',   flag:'🇺🇿'},
-    {name:'RD del Congo', flag:'🇨🇩'}
-  ]},
-  { letter:'L', teams:[
-    {name:'Inglaterra',   flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},
-    {name:'Croacia',      flag:'🇭🇷'},
-    {name:'Ghana',        flag:'🇬🇭'},
-    {name:'Panamá',       flag:'🇵🇦'}
-  ]}
+  {l:'A',teams:[{n:'México',f:'🇲🇽'},{n:'Corea del Sur',f:'🇰🇷'},{n:'Sudáfrica',f:'🇿🇦'},{n:'Rep. Checa',f:'🇨🇿'}]},
+  {l:'B',teams:[{n:'Canadá',f:'🇨🇦'},{n:'Suiza',f:'🇨🇭'},{n:'Catar',f:'🇶🇦'},{n:'Bosnia-Herz.',f:'🇧🇦'}]},
+  {l:'C',teams:[{n:'Brasil',f:'🇧🇷'},{n:'Marruecos',f:'🇲🇦'},{n:'Escocia',f:'🏴󠁧󠁢󠁳󠁣󠁴󠁿'},{n:'Haití',f:'🇭🇹'}]},
+  {l:'D',teams:[{n:'EE. UU.',f:'🇺🇸'},{n:'Paraguay',f:'🇵🇾'},{n:'Australia',f:'🇦🇺'},{n:'Turquía',f:'🇹🇷'}]},
+  {l:'E',teams:[{n:'Alemania',f:'🇩🇪'},{n:'Ecuador',f:'🇪🇨'},{n:'C. de Marfil',f:'🇨🇮'},{n:'Curazao',f:'🇨🇼'}]},
+  {l:'F',teams:[{n:'Países Bajos',f:'🇳🇱'},{n:'Japón',f:'🇯🇵'},{n:'Túnez',f:'🇹🇳'},{n:'Suecia',f:'🇸🇪'}]},
+  {l:'G',teams:[{n:'Bélgica',f:'🇧🇪'},{n:'Egipto',f:'🇪🇬'},{n:'Irán',f:'🇮🇷'},{n:'Nueva Zelanda',f:'🇳🇿'}]},
+  {l:'H',teams:[{n:'España',f:'🇪🇸'},{n:'Uruguay',f:'🇺🇾'},{n:'Arabia Saudí',f:'🇸🇦'},{n:'Cabo Verde',f:'🇨🇻'}]},
+  {l:'I',teams:[{n:'Francia',f:'🇫🇷'},{n:'Senegal',f:'🇸🇳'},{n:'Noruega',f:'🇳🇴'},{n:'Irak',f:'🇮🇶'}]},
+  {l:'J',teams:[{n:'Argentina',f:'🇦🇷'},{n:'Austria',f:'🇦🇹'},{n:'Argelia',f:'🇩🇿'},{n:'Jordania',f:'🇯🇴'}]},
+  {l:'K',teams:[{n:'Portugal',f:'🇵🇹'},{n:'Colombia',f:'🇨🇴'},{n:'Uzbekistán',f:'🇺🇿'},{n:'RD del Congo',f:'🇨🇩'}]},
+  {l:'L',teams:[{n:'Inglaterra',f:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'},{n:'Croacia',f:'🇭🇷'},{n:'Ghana',f:'🇬🇭'},{n:'Panamá',f:'🇵🇦'}]}
 ];
 
-// state: for each group, array of 4 positions (0=unset,1,2,3,4)
+// state[letter] = [pos0, pos1, pos2, pos3]  0=sin asignar, 1-3=posición, 4=eliminado
 const state = {};
-GROUPS.forEach(g => { state[g.letter] = g.teams.map(()=>0); });
+GROUPS.forEach(g => state[g.l] = [0,0,0,0]);
 
-let terOrder = GROUPS.map(g=>g.letter);
+let terOrder = GROUPS.map(g => g.l);
 let dragSrc = null;
 
-const posLabel = ['','1°','2°','3°','4°'];
-const posClass = ['','active-1','active-2','active-3','active-elim'];
+const posLbl = ['','1°','2°','3°','✕'];
+const posClass = ['','s1','s2','s3','s4'];
 
 function buildGroups(){
   const grid = document.getElementById('grid');
-  grid.innerHTML='';
-  GROUPS.forEach(g=>{
+  GROUPS.forEach(g => {
     const card = document.createElement('div');
-    card.className='gcard';
-    card.innerHTML=`<div class="ghdr"><span class="gl">${g.letter}</span><span>Grupo ${g.letter}</span></div>`;
-    g.teams.forEach((t,i)=>{
+    card.className = 'gcard';
+    card.innerHTML = `<div class="ghdr"><span class="gl">${g.l}</span><span>Grupo ${g.l}</span></div>`;
+    g.teams.forEach((t,i) => {
       const btn = document.createElement('button');
-      btn.className='team-btn';
-      btn.dataset.group=g.letter;
-      btn.dataset.idx=i;
-      btn.innerHTML=`<span class="flag">${t.flag}</span><span class="tname">${t.name}</span><span class="pos-ring"></span>`;
-      btn.addEventListener('click',()=>onTeamClick(g.letter,i));
+      btn.className = 'team-btn';
+      btn.dataset.g = g.l; btn.dataset.i = i;
+      btn.innerHTML = `<span class="flag">${t.f}</span><span class="tname">${t.n}</span><span class="ring"></span>`;
+      btn.addEventListener('click', () => onTeamClick(g.l, i));
       card.appendChild(btn);
     });
     grid.appendChild(card);
   });
 }
 
-function onTeamClick(letter,idx){
+function onTeamClick(letter, idx){
   const grp = state[letter];
   const cur = grp[idx];
-  // cycle: 0->1->2->3->4->0
-  // but enforce uniqueness for 1,2,3 (4=eliminado can repeat implicitly)
-  let next = (cur % 4) + 1; // 0->1,1->2,2->3,3->4,4->... we do 0->1..4->0
-  // actually simple cycle 0..4
-  next = cur === 4 ? 0 : cur + 1;
-  // if next is 1,2,3 and already taken by another team, skip
-  if(next>=1 && next<=3){
-    const taken = grp.some((v,j)=>j!==idx && v===next);
-    if(taken){
-      // try next
-      next = next===3 ? 4 : next+1;
-      if(next>=1&&next<=3){
-        const taken2 = grp.some((v,j)=>j!==idx && v===next);
-        if(taken2) next=4;
-      }
+  let next = cur === 4 ? 0 : cur + 1;
+  // posiciones 1,2,3 son únicas por grupo
+  if(next >= 1 && next <= 3){
+    let attempts = 0;
+    while(next >= 1 && next <= 3 && grp.some((v,j) => j!==idx && v===next) && attempts < 5){
+      next = next === 3 ? 4 : next + 1;
+      attempts++;
     }
   }
-  grp[idx]=next;
+  grp[idx] = next;
   renderGroups();
   updateTerceros();
 }
 
 function renderGroups(){
-  GROUPS.forEach(g=>{
-    g.teams.forEach((t,i)=>{
-      const btn = document.querySelector(`.team-btn[data-group="${g.letter}"][data-idx="${i}"]`);
+  GROUPS.forEach(g => {
+    g.teams.forEach((t,i) => {
+      const btn = document.querySelector(`.team-btn[data-g="${g.l}"][data-i="${i}"]`);
       if(!btn) return;
-      const v = state[g.letter][i];
-      btn.className='team-btn'+(v>0?' '+posClass[v]:'');
-      const ring = btn.querySelector('.pos-ring');
-      ring.textContent = v>0 ? (v===4?'✕':posLabel[v]) : '';
+      const v = state[g.l][i];
+      btn.className = 'team-btn' + (v > 0 ? ' ' + posClass[v] : '');
+      const ring = btn.querySelector('.ring');
+      ring.textContent = v > 0 ? posLbl[v] : '';
     });
   });
 }
 
-function getTeamByPos(letter, pos){
-  const g = GROUPS.find(x=>x.letter===letter);
-  const idx = state[letter].indexOf(pos);
-  return idx>=0 ? g.teams[idx] : null;
-}
-
-function getTerceros(){
-  return terOrder.map(letter=>{
-    const t = getTeamByPos(letter, 3);
-    return t ? {letter, ...t} : null;
-  }).filter(Boolean);
+function getThird(letter){
+  const g = GROUPS.find(x => x.l === letter);
+  const idx = state[letter].indexOf(3);
+  return idx >= 0 ? {...g.teams[idx], letter} : null;
 }
 
 function updateTerceros(){
   const list = document.getElementById('terList');
-  list.innerHTML='';
-  const terceros = getTerceros();
+  list.innerHTML = '';
+  const terceros = terOrder.map(l => getThird(l)).filter(Boolean);
+
   if(!terceros.length){
-    list.innerHTML='<div class="empty-t">Marca el 3er lugar en cada grupo (toca hasta llegar a 3°) para verlos aquí.</div>';
+    list.innerHTML = '<div class="empty-t">Cuando marques el 3° lugar de un grupo aparece aquí automáticamente.</div>';
     return;
   }
-  terceros.forEach((t,i)=>{
-    const adv=i<8;
-    const row=document.createElement('div');
-    row.className='ter-row';
-    row.draggable=true;
-    row.dataset.letter=t.letter;
-    row.innerHTML=`
+
+  terceros.forEach((t, i) => {
+    const adv = i < 8;
+    const row = document.createElement('div');
+    row.className = 'ter-row';
+    row.draggable = true;
+    row.dataset.l = t.letter;
+    row.innerHTML = `
       <div class="drag-dots"><span></span><span></span><span></span></div>
-      <span class="ter-rank ${adv?'rank-adv':'rank-out'}">${i+1}</span>
-      <span class="ter-flag">${t.flag}</span>
-      <span class="ter-name">${t.name}</span>
+      <span class="ter-rank ${adv?'rank-a':'rank-o'}">${i+1}</span>
+      <span class="ter-flag">${t.f}</span>
+      <span class="ter-name">${t.n}</span>
       <span class="ter-grp">GRP ${t.letter}</span>
-      <span class="adv-badge ${adv?'y':'n'}">${adv?'CLASIFICA':'ELIMINADO'}</span>`;
-    row.addEventListener('dragstart',e=>{dragSrc=row;row.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
-    row.addEventListener('dragover',e=>{e.preventDefault();document.querySelectorAll('.ter-row').forEach(r=>r.classList.remove('drag-over'));row.classList.add('drag-over');});
-    row.addEventListener('drop',e=>{
+      <span class="ab ${adv?'y':'n'}">${adv?'CLASIFICA':'ELIMINADO'}</span>`;
+    row.addEventListener('dragstart', e => {
+      dragSrc = row; row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragover', e => {
       e.preventDefault();
-      if(dragSrc===row) return;
-      const si=terOrder.indexOf(dragSrc.dataset.letter);
-      const ti=terOrder.indexOf(row.dataset.letter);
-      terOrder.splice(si,1);terOrder.splice(ti,0,dragSrc.dataset.letter);
+      document.querySelectorAll('.ter-row').forEach(r => r.classList.remove('drag-over'));
+      row.classList.add('drag-over');
+    });
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      if(dragSrc === row) return;
+      const si = terOrder.indexOf(dragSrc.dataset.l);
+      const ti = terOrder.indexOf(row.dataset.l);
+      terOrder.splice(si,1); terOrder.splice(ti,0,dragSrc.dataset.l);
       updateTerceros();
     });
-    row.addEventListener('dragend',()=>document.querySelectorAll('.ter-row').forEach(r=>r.classList.remove('dragging','drag-over')));
+    row.addEventListener('dragend', () =>
+      document.querySelectorAll('.ter-row').forEach(r => r.classList.remove('dragging','drag-over'))
+    );
     list.appendChild(row);
   });
 }
 
-function resetAll(){
-  GROUPS.forEach(g=>{ state[g.letter]=g.teams.map(()=>0); });
-  terOrder=GROUPS.map(g=>g.letter);
-  renderGroups();
-  updateTerceros();
-  document.getElementById('prevSec').style.display='none';
-}
+// touch drag support for mobile
+let touchDragEl = null, touchClone = null;
+document.addEventListener('touchstart', e => {
+  const row = e.target.closest('.ter-row');
+  if(!row) return;
+  touchDragEl = row;
+  touchClone = row.cloneNode(true);
+  touchClone.style.cssText = `position:fixed;opacity:.7;pointer-events:none;z-index:999;
+    width:${row.offsetWidth}px;left:${row.getBoundingClientRect().left}px;
+    top:${row.getBoundingClientRect().top}px;background:#1c2333;border-radius:8px;`;
+  document.body.appendChild(touchClone);
+}, {passive:true});
 
-/* ---- image generation ---- */
-function genImg(){
-  const cv=document.getElementById('cv');
-  const W=900,pad=22;
-  const cols=4;
-  const colW=(W-pad*2-(cols-1)*10)/cols;
-  const rowH=24,hdrH=38,groupH=hdrH+4*rowH+14;
-  const rows=3;
-  const terceros=getTerceros();
-  const terH=terceros.length?54+terceros.length*30+16:0;
-  const totalH=pad+64+rows*(groupH+12)+terH+36;
-  cv.width=W;cv.height=totalH;
-  const ctx=cv.getContext('2d');
+document.addEventListener('touchmove', e => {
+  if(!touchClone) return;
+  const t = e.touches[0];
+  touchClone.style.left = (t.clientX - touchClone.offsetWidth/2) + 'px';
+  touchClone.style.top = (t.clientY - 24) + 'px';
+  document.querySelectorAll('.ter-row').forEach(r => r.classList.remove('drag-over'));
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  const over = el && el.closest('.ter-row');
+  if(over && over !== touchDragEl) over.classList.add('drag-over');
+}, {passive:true});
 
-  // bg
-  ctx.fillStyle='#0a0e1a';ctx.fillRect(0,0,W,totalH);
-  // subtle gradient
-  const grd=ctx.createRadialGradient(W*.2,0,0,W*.2,0,W*.6);
-  grd.addColorStop(0,'rgba(26,86,219,.18)');grd.addColorStop(1,'transparent');
-  ctx.fillStyle=grd;ctx.fillRect(0,0,W,totalH);
-
-  // header
-  ctx.fillStyle='#00c85a';ctx.font='bold 38px "Bebas Neue",sans-serif';ctx.textAlign='center';
-  ctx.fillText('MUNDIAL 2026',W/2,46);
-  ctx.fillStyle='#8a94a8';ctx.font='500 12px "DM Sans",sans-serif';
-  ctx.fillText('CLASIFICADOS — FASE DE GRUPOS',W/2,64);
-
-  const rr=(x,y,w,h,r,fill,stroke)=>{
-    ctx.beginPath();
-    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-    if(fill){ctx.fillStyle=fill;ctx.fill();}
-    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=.5;ctx.stroke();}
-  };
-
-  const posColors=['','#00c85a','#1a56db','#f5a623','#e53935'];
-
-  GROUPS.forEach((g,idx)=>{
-    const col=idx%cols,row=Math.floor(idx/cols);
-    const x=pad+col*(colW+10),y=pad+76+row*(groupH+12);
-    rr(x,y,colW,groupH,8,'#111827','#1c2333');
-    // group header bg
-    ctx.fillStyle='#1c2333';
-    ctx.beginPath();ctx.moveTo(x+8,y);ctx.lineTo(x+colW-8,y);
-    ctx.quadraticCurveTo(x+colW,y,x+colW,y+8);
-    ctx.lineTo(x+colW,y+hdrH-4);ctx.lineTo(x,y+hdrH-4);
-    ctx.lineTo(x,y+8);ctx.quadraticCurveTo(x,y,x+8,y);ctx.closePath();ctx.fill();
-    ctx.fillStyle='#00c85a';ctx.font='bold 17px "Bebas Neue",sans-serif';ctx.textAlign='left';
-    ctx.fillText(g.letter,x+10,y+22);
-    ctx.fillStyle='#8a94a8';ctx.font='500 9px "DM Sans",sans-serif';
-    ctx.fillText(`GRUPO ${g.letter}`,x+28,y+22);
-    ctx.strokeStyle='#1c2333';ctx.lineWidth=.5;
-    ctx.beginPath();ctx.moveTo(x+6,y+hdrH-4);ctx.lineTo(x+colW-6,y+hdrH-4);ctx.stroke();
-
-    // find sorted teams by position
-    const sorted = [...g.teams.map((t,i)=>({...t,pos:state[g.letter][i],origIdx:i}))];
-    // display in fixed order (top4 by pos if set, otherwise original order)
-    g.teams.forEach((t,ti)=>{
-      const pos=state[g.letter][ti];
-      const ey=y+hdrH+ti*rowH+16;
-      // flag emoji
-      ctx.font='16px serif';ctx.textAlign='left';
-      ctx.fillText(t.flag,x+8,ey);
-      // name
-      ctx.fillStyle=pos>0?'#f0f2f8':'#444c5e';
-      ctx.font=pos>0?'500 11px "DM Sans",sans-serif':'400 11px "DM Sans",sans-serif';
-      let nm=t.name;
-      while(ctx.measureText(nm).width>colW-70&&nm.length>4) nm=nm.slice(0,-1)+'…';
-      ctx.fillText(nm,x+34,ey);
-      // pos badge
-      if(pos>0){
-        ctx.fillStyle=posColors[pos];
-        ctx.font='700 10px "DM Sans",sans-serif';ctx.textAlign='right';
-        ctx.fillText(pos===4?'✕':posLabel[pos],x+colW-8,ey);
-        ctx.textAlign='left';
-      }
-    });
-  });
-
-  if(terceros.length){
-    const ty=pad+76+rows*(groupH+12)+10;
-    ctx.fillStyle='#f5a623';ctx.font='bold 15px "Bebas Neue",sans-serif';ctx.textAlign='left';
-    ctx.fillText('MEJORES TERCEROS',pad,ty+18);
-    ctx.strokeStyle='rgba(245,166,35,.3)';ctx.lineWidth=.5;
-    ctx.beginPath();ctx.moveTo(pad+180,ty+13);ctx.lineTo(W-pad,ty+13);ctx.stroke();
-    terceros.forEach((t,i)=>{
-      const ry=ty+44+i*30;
-      const adv=i<8;
-      rr(pad,ry-18,W-pad*2,26,5,adv?'rgba(0,200,90,.07)':'rgba(229,57,53,.07)','transparent');
-      ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='bold 15px "Bebas Neue",sans-serif';ctx.textAlign='left';
-      ctx.fillText(i+1,pad+8,ry);
-      ctx.font='16px serif';ctx.fillText(t.flag,pad+30,ry);
-      ctx.fillStyle='#f0f2f8';ctx.font='500 12px "DM Sans",sans-serif';
-      ctx.fillText(t.name,pad+56,ry);
-      ctx.fillStyle='#8a94a8';ctx.font='400 10px "DM Sans",sans-serif';ctx.textAlign='right';
-      ctx.fillText(`GRP ${t.letter}`,W-pad-90,ry);
-      ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='600 10px "DM Sans",sans-serif';
-      ctx.fillText(adv?'CLASIFICA':'ELIMINADO',W-pad-8,ry);
-      ctx.textAlign='left';
-    });
+document.addEventListener('touchend', e => {
+  if(!touchDragEl || !touchClone) return;
+  const t = e.changedTouches[0];
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  const over = el && el.closest('.ter-row');
+  if(over && over !== touchDragEl){
+    const si = terOrder.indexOf(touchDragEl.dataset.l);
+    const ti = terOrder.indexOf(over.dataset.l);
+    terOrder.splice(si,1); terOrder.splice(ti,0,touchDragEl.dataset.l);
+    updateTerceros();
   }
+  touchClone.remove(); touchClone = null; touchDragEl = null;
+  document.querySelectorAll('.ter-row').forEach(r => r.classList.remove('drag-over'));
+});
 
-  ctx.fillStyle='#2a3040';ctx.font='400 11px "DM Sans",sans-serif';ctx.textAlign='center';
-  ctx.fillText('mundial2026.github.io  ·  '+new Date().toLocaleDateString('es-EC'),W/2,totalH-10);
-
-  const img=cv.toDataURL('image/png');
-  document.getElementById('prevImg').src=img;
-  const ps=document.getElementById('prevSec');
-  ps.style.display='block';
-  ps.scrollIntoView({behavior:'smooth',block:'nearest'});
+function resetAll(){
+  GROUPS.forEach(g => state[g.l] = [0,0,0,0]);
+  terOrder = GROUPS.map(g => g.l);
+  renderGroups(); updateTerceros();
 }
 
-function shareWA(){
-  const img=document.getElementById('prevImg').src;
-  if(!img){alert('Primero genera la imagen.');return;}
-  const mob=/Android|iPhone|iPad/i.test(navigator.userAgent);
-  if(mob&&navigator.canShare){
-    fetch(img).then(r=>r.blob()).then(b=>{
-      const f=new File([b],'mundial2026.png',{type:'image/png'});
-      if(navigator.canShare({files:[f]})){
-        navigator.share({files:[f],title:'Mundial 2026',text:'🏆 Clasificados fase de grupos Mundial 2026'}).catch(waFb);
-      } else waFb();
+/* ---- generar imagen y compartir directo ---- */
+async function compartir(){
+  document.getElementById('overlay').classList.add('show');
+  // pequeño delay para que el overlay se renderice
+  await new Promise(r => setTimeout(r, 80));
+  try {
+    const dataUrl = await buildCanvas();
+    document.getElementById('overlay').classList.remove('show');
+    const blob = await (await fetch(dataUrl)).blob();
+    const file = new File([blob], 'mundial2026.png', {type:'image/png'});
+    const isMob = /Android|iPhone|iPad/i.test(navigator.userAgent);
+    if(isMob && navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({
+        files:[file],
+        title:'Mundial 2026 — Clasificados',
+        text:'🏆 Mis picks de la fase de grupos del Mundial 2026'
+      });
+    } else {
+      // fallback: descargar + abrir whatsapp
+      const a = document.createElement('a');
+      a.download = 'mundial2026.png';
+      a.href = dataUrl; a.click();
+      setTimeout(()=>{
+        window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('🏆 Clasificados Fase de Grupos — Mundial 2026'),'_blank');
+      }, 800);
+    }
+  } catch(err){
+    document.getElementById('overlay').classList.remove('show');
+    console.error(err);
+  }
+}
+
+function buildCanvas(){
+  return new Promise(resolve => {
+    const cv = document.getElementById('cv');
+    const W=900, pad=22;
+    const cols=4, colW=(W-pad*2-(cols-1)*10)/cols;
+    const rowH=24, hdrH=38, groupH=hdrH+4*rowH+14;
+    const terceros = terOrder.map(l=>getThird(l)).filter(Boolean);
+    const terH = terceros.length ? 54+terceros.length*30+16 : 0;
+    const totalH = pad+68+3*(groupH+12)+terH+36;
+    cv.width=W; cv.height=totalH;
+    const ctx = cv.getContext('2d');
+
+    ctx.fillStyle='#0a0e1a'; ctx.fillRect(0,0,W,totalH);
+    const grd=ctx.createRadialGradient(W*.2,0,0,W*.2,0,W*.6);
+    grd.addColorStop(0,'rgba(26,86,219,.18)'); grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd; ctx.fillRect(0,0,W,totalH);
+
+    ctx.fillStyle='#00c85a'; ctx.font='bold 38px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('MUNDIAL 2026',W/2,46);
+    ctx.fillStyle='#8a94a8'; ctx.font='500 12px sans-serif';
+    ctx.fillText('CLASIFICADOS — FASE DE GRUPOS',W/2,64);
+
+    const rr=(x,y,w,h,r,fill,stroke)=>{
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+      ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+      ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+      ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+      if(fill){ctx.fillStyle=fill;ctx.fill();}
+      if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=.5;ctx.stroke();}
+    };
+
+    const posColors=['','#00c85a','#1a56db','#f5a623','#e53935'];
+
+    GROUPS.forEach((g,idx)=>{
+      const col=idx%cols, row=Math.floor(idx/cols);
+      const x=pad+col*(colW+10), y=pad+78+row*(groupH+12);
+      rr(x,y,colW,groupH,8,'#111827','#1c2333');
+      ctx.fillStyle='#1c2333';
+      ctx.beginPath();ctx.moveTo(x+8,y);ctx.lineTo(x+colW-8,y);
+      ctx.quadraticCurveTo(x+colW,y,x+colW,y+8);
+      ctx.lineTo(x+colW,y+hdrH-4);ctx.lineTo(x,y+hdrH-4);
+      ctx.lineTo(x,y+8);ctx.quadraticCurveTo(x,y,x+8,y);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#00c85a';ctx.font='bold 17px sans-serif';ctx.textAlign='left';
+      ctx.fillText(g.l,x+10,y+22);
+      ctx.fillStyle='#8a94a8';ctx.font='9px sans-serif';
+      ctx.fillText(`GRUPO ${g.l}`,x+28,y+22);
+      ctx.strokeStyle='#1c2333';ctx.lineWidth=.5;
+      ctx.beginPath();ctx.moveTo(x+6,y+hdrH-4);ctx.lineTo(x+colW-6,y+hdrH-4);ctx.stroke();
+
+      g.teams.forEach((t,ti)=>{
+        const pos=state[g.l][ti];
+        const ey=y+hdrH+ti*rowH+16;
+        ctx.font='16px serif';ctx.textAlign='left';
+        ctx.fillText(t.f,x+7,ey);
+        ctx.fillStyle=pos>0?'#f0f2f8':'#3a4255';
+        ctx.font=(pos>0?'500':'400')+' 11px sans-serif';
+        let nm=t.n;
+        while(ctx.measureText(nm).width>colW-66&&nm.length>3) nm=nm.slice(0,-1)+'…';
+        ctx.fillText(nm,x+33,ey);
+        if(pos>0){
+          ctx.fillStyle=posColors[pos];
+          ctx.font='700 10px sans-serif';ctx.textAlign='right';
+          ctx.fillText(pos===4?'✕':posLbl[pos],x+colW-7,ey);
+          ctx.textAlign='left';
+        }
+      });
     });
-  } else waFb();
+
+    if(terceros.length){
+      const ty=pad+78+3*(groupH+12)+10;
+      ctx.fillStyle='#f5a623';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
+      ctx.fillText('MEJORES TERCEROS',pad,ty+18);
+      ctx.strokeStyle='rgba(245,166,35,.3)';ctx.lineWidth=.5;
+      ctx.beginPath();ctx.moveTo(pad+185,ty+13);ctx.lineTo(W-pad,ty+13);ctx.stroke();
+      terceros.forEach((t,i)=>{
+        const ry=ty+44+i*30, adv=i<8;
+        rr(pad,ry-18,W-pad*2,26,5,adv?'rgba(0,200,90,.07)':'rgba(229,57,53,.07)','transparent');
+        ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
+        ctx.fillText(i+1,pad+8,ry);
+        ctx.font='16px serif';ctx.fillText(t.f,pad+30,ry);
+        ctx.fillStyle='#f0f2f8';ctx.font='500 12px sans-serif';
+        ctx.fillText(t.n,pad+56,ry);
+        ctx.fillStyle='#8a94a8';ctx.font='400 10px sans-serif';ctx.textAlign='right';
+        ctx.fillText(`GRP ${t.letter}`,W-pad-90,ry);
+        ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='600 10px sans-serif';
+        ctx.fillText(adv?'CLASIFICA':'ELIMINADO',W-pad-8,ry);
+        ctx.textAlign='left';
+      });
+    }
+
+    ctx.fillStyle='#2a3040';ctx.font='400 10px sans-serif';ctx.textAlign='center';
+    ctx.fillText('davidvalencia13.github.io/Mundial2026  ·  '+new Date().toLocaleDateString('es-EC'),W/2,totalH-10);
+
+    resolve(cv.toDataURL('image/png'));
+  });
 }
-function waFb(){window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('🏆 Clasificados Fase de Grupos — Mundial 2026'),'_blank');}
-function dlImg(){const a=document.createElement('a');a.download='mundial2026_grupos.png';a.href=document.getElementById('prevImg').src;a.click();}
 
 buildGroups();
 updateTerceros();
