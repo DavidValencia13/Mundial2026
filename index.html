@@ -242,10 +242,7 @@ function onTeamClick(letter,idx){
     terRanking=terRanking.filter(function(l){return l!==letter;});
   }
   grp[idx]=next;
-  // si ahora es 3, agregarlo al ranking si no esta ya
-  if(next===3&&terRanking.indexOf(letter)<0){
-    terRanking.push(letter);
-  }
+
   renderGroups();
   renderTerceros();
 }
