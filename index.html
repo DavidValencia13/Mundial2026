@@ -318,10 +318,9 @@ function renderTerceros(){
 function onTerClick(letter){
   var idx=terRanking.indexOf(letter);
   if(idx>=0){
-    // ya tiene ranking: quitarlo (vuelve a pending)
     terRanking.splice(idx,1);
   } else {
-    // no tiene ranking: agregarlo al final del ranking
+    if(terRanking.length>=8) return;
     terRanking.push(letter);
   }
   renderTerceros();
