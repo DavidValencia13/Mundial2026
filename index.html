@@ -27,13 +27,17 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 .hdr p{font-size:13px;color:var(--txt2)}
 .wrap{max-width:1100px;margin:0 auto;padding:1.25rem 1rem 3rem}
 .sec{font-family:var(--display);font-size:18px;letter-spacing:1px;color:var(--txt2);
-  margin:1.75rem 0 .875rem;display:flex;align-items:center;gap:10px}
-.sec::after{content:'';flex:1;height:1px;background:var(--bd)}
+  margin:1.75rem 0 .875rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sec::after{content:'';flex:1;height:1px;background:var(--bd);min-width:20px}
+.sec-hint{font-family:var(--body);font-size:11px;font-weight:400;color:var(--txt2);
+  letter-spacing:0;text-transform:none;opacity:.7}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
 .gcard{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
 .ghdr{background:var(--bg3);padding:7px 13px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--bd)}
 .gl{font-family:var(--display);font-size:20px;color:var(--green);line-height:1}
 .ghdr span{font-size:11px;font-weight:500;color:var(--txt2);letter-spacing:1px;text-transform:uppercase}
+
+/* botones de equipo en grupos */
 .team-btn{
   width:100%;display:flex;align-items:center;gap:10px;
   padding:8px 13px;border:none;background:transparent;cursor:pointer;
@@ -42,11 +46,10 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 }
 .team-btn:last-child{border-bottom:none}
 .team-btn:hover{background:rgba(255,255,255,.04)}
-.team-btn.s1{background:rgba(0,200,90,.12)!important}
-.team-btn.s2{background:rgba(26,86,219,.12)!important}
-.team-btn.s3{background:rgba(245,166,35,.12)!important}
-.team-btn.s4{background:rgba(229,57,53,.06)!important}
-.flag{font-size:22px;line-height:1;min-width:28px;text-align:center}
+.team-btn.s1{background:rgba(0,200,90,.15)!important}
+.team-btn.s2{background:rgba(26,86,219,.15)!important}
+.team-btn.s3{background:rgba(245,166,35,.15)!important}
+.flag{font-size:22px;line-height:1;min-width:28px;text-align:center;display:flex;align-items:center}
 .tname{flex:1;font-size:13px}
 .ring{
   width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);
@@ -56,34 +59,57 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 .s1 .ring{background:var(--green);border-color:var(--green);color:#000}
 .s2 .ring{background:var(--blue);border-color:var(--blue);color:#fff}
 .s3 .ring{background:var(--gold);border-color:var(--gold);color:#000}
-.s4 .ring{background:var(--red);border-color:var(--red);color:#fff;font-size:11px}
+
+/* seccion terceros */
 .ter-wrap{margin-top:1.5rem}
 .ter-info{font-size:12px;color:var(--txt2);background:rgba(245,166,35,.07);
   border:1px solid rgba(245,166,35,.2);border-radius:var(--r);padding:10px 14px;margin-bottom:10px}
-.ter-list{display:flex;flex-direction:column;gap:6px}
-/* tercero row - ahora con botones arriba/abajo */
-.ter-row{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--bd);
-  border-radius:8px;padding:8px 12px}
-.ter-rank{font-family:var(--display);font-size:18px;min-width:24px}
-.rank-a{color:var(--green)}.rank-o{color:var(--red)}
-.ter-flag{font-size:20px;line-height:1;display:flex;align-items:center}
+.ter-list{display:flex;flex-direction:column;gap:5px}
+
+/* cada fila de tercero — clickeable */
+.ter-row{
+  display:flex;align-items:center;gap:10px;
+  border-radius:8px;padding:9px 13px;cursor:pointer;
+  border:1px solid var(--bd);background:var(--bg2);
+  transition:background .15s,border-color .15s;
+  user-select:none;
+}
+.ter-row:hover{background:rgba(255,255,255,.04)}
+/* clasificados (1-8) */
+.ter-row.adv{background:rgba(0,200,90,.07);border-color:rgba(0,200,90,.2)}
+.ter-row.adv:hover{background:rgba(0,200,90,.12)}
+/* eliminados (9-12) */
+.ter-row.elim{background:rgba(229,57,53,.05);border-color:rgba(229,57,53,.15)}
+.ter-row.elim:hover{background:rgba(229,57,53,.1)}
+/* sin asignar posicion */
+.ter-row.pending{opacity:.6}
+.ter-row.pending:hover{opacity:1}
+
+/* numero de posicion — caja cuadrada estilo foto */
+.ter-pos{
+  width:28px;height:28px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:16px;flex-shrink:0;
+  transition:all .2s;
+}
+.pos-unset{background:rgba(255,255,255,.06);color:var(--txt2)}
+.pos-adv{background:var(--green);color:#000}
+.pos-elim{background:var(--red);color:#fff}
+
+.ter-flag{display:flex;align-items:center;flex-shrink:0}
 .ter-name{flex:1;font-size:13px;font-weight:500}
-.ter-grp{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--txt2);background:var(--bg3);padding:2px 7px;border-radius:4px}
-.ab{font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border-radius:4px}
-.ab.y{background:rgba(0,200,90,.12);color:var(--green);border:1px solid rgba(0,200,90,.25)}
-.ab.n{background:rgba(229,57,53,.1);color:var(--red);border:1px solid rgba(229,57,53,.2)}
-/* botones subir bajar */
-.move-btns{display:flex;flex-direction:column;gap:3px}
-.move-btn{background:var(--bg3);border:1px solid var(--bd);color:var(--txt2);
-  width:26px;height:22px;border-radius:4px;cursor:pointer;font-size:12px;
-  display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
-.move-btn:hover{background:rgba(255,255,255,.1);color:var(--txt)}
-.move-btn:disabled{opacity:.2;cursor:default}
+.ter-grp{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--txt2);
+  background:var(--bg3);padding:2px 7px;border-radius:4px;flex-shrink:0}
+
 .empty-t{font-size:13px;color:var(--txt2);padding:10px 0;font-style:italic}
-.reset-row{display:flex;justify-content:flex-end;margin-bottom:.5rem}
+.reset-row{display:flex;justify-content:flex-end;margin-bottom:.5rem;gap:8px}
 .btn-reset{background:transparent;color:var(--txt2);border:1px solid var(--bd);
   padding:5px 14px;border-radius:6px;font-family:var(--body);font-size:12px;cursor:pointer}
 .btn-reset:hover{border-color:rgba(255,255,255,.2);color:var(--txt)}
+.btn-reset-ter{background:transparent;color:var(--txt2);border:1px solid var(--bd);
+  padding:4px 10px;border-radius:6px;font-family:var(--body);font-size:11px;cursor:pointer;margin-left:8px}
+.btn-reset-ter:hover{border-color:rgba(255,255,255,.2);color:var(--txt)}
+
 .share-fixed{position:sticky;bottom:1.5rem;display:flex;justify-content:center;margin-top:2rem;z-index:10;pointer-events:none}
 .btn-share{background:var(--green);color:#000;border:none;padding:14px 32px;border-radius:50px;
   font-family:var(--body);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;
@@ -113,8 +139,12 @@ canvas{display:none}
   <div class="sec">Grupos A &#8211; L</div>
   <div class="grid" id="grid"></div>
   <div class="ter-wrap">
-    <div class="sec">Mejores terceros</div>
-    <div class="ter-info">Usa las flechas &#8593; &#8595; para ordenar del mejor al peor tercero. Los primeros <strong>8</strong> clasifican.</div>
+    <div class="sec">
+      Mejores terceros
+      <span class="sec-hint">&#8212; Toca en orden: el primero que toques sera el mejor tercero</span>
+      <button class="btn-reset-ter" onclick="resetTerceros()">&#8635; Limpiar</button>
+    </div>
+    <div class="ter-info">Toca los paises en el orden que clasificaron: 1er toque = mejor tercero, 2do toque = segundo mejor, etc. Toca de nuevo para quitar.</div>
     <div class="ter-list" id="terList"></div>
   </div>
   <div class="share-fixed">
@@ -136,25 +166,21 @@ var FLAGMAP = {
   'FR':'1f1eb-1f1f7','SN':'1f1f8-1f1f3','NO':'1f1f3-1f1f4','IQ':'1f1ee-1f1f6',
   'AR':'1f1e6-1f1f7','AT':'1f1e6-1f1f9','DZ':'1f1e9-1f1ff','JO':'1f1ef-1f1f4',
   'PT':'1f1f5-1f1f9','CO':'1f1e8-1f1f4','UZ':'1f1fa-1f1ff','CD':'1f1e8-1f1e9',
-  'HR':'1f1ed-1f1f7','GH':'1f1ec-1f1ed','PA':'1f1f5-1f1e6',
-  // Escocia e Inglaterra — usar bandera GB como fallback claro
-  'SCT':'1f3f4-e0067-e0062-e0073-e0063-e0074-e007f',
-  'ENG':'1f3f4-e0067-e0062-e0065-e006e-e0067-e007f'
+  'HR':'1f1ed-1f1f7','GH':'1f1ec-1f1ed','PA':'1f1f5-1f1e6'
 };
-
-// Para Escocia e Inglaterra usamos flagcdn que tiene soporte especifico
 var OVERRIDE = {
-  'SCT': 'https://flagcdn.com/w40/gb-sct.png',
-  'ENG': 'https://flagcdn.com/w40/gb-eng.png'
+  'SCT':'https://flagcdn.com/w40/gb-sct.png',
+  'ENG':'https://flagcdn.com/w40/gb-eng.png'
 };
 
-function flagImg(code, size){
-  size = size || 22;
-  var src = OVERRIDE[code] ? OVERRIDE[code] : (TWEMOJI + (FLAGMAP[code]||'') + '.png');
+function flagImg(code,size){
+  size=size||22;
+  var src=OVERRIDE[code]?OVERRIDE[code]:(TWEMOJI+(FLAGMAP[code]||'')+'.png');
+  if(!OVERRIDE[code]&&!FLAGMAP[code]) return '<span style="font-size:10px;color:#8a94a8">'+code+'</span>';
   return '<img src="'+src+'" style="width:'+size+'px;height:'+size+'px;object-fit:contain;vertical-align:middle;border-radius:2px" loading="lazy">';
 }
 
-var GROUPS = [
+var GROUPS=[
   {l:'A',teams:[{n:'M\u00e9xico',c:'MX'},{n:'Corea del Sur',c:'KR'},{n:'Sud\u00e1frica',c:'ZA'},{n:'Rep. Checa',c:'CZ'}]},
   {l:'B',teams:[{n:'Canad\u00e1',c:'CA'},{n:'Suiza',c:'CH'},{n:'Catar',c:'QA'},{n:'Bosnia-Herz.',c:'BA'}]},
   {l:'C',teams:[{n:'Brasil',c:'BR'},{n:'Marruecos',c:'MA'},{n:'Escocia',c:'SCT'},{n:'Hait\u00ed',c:'HT'}]},
@@ -169,138 +195,184 @@ var GROUPS = [
   {l:'L',teams:[{n:'Inglaterra',c:'ENG'},{n:'Croacia',c:'HR'},{n:'Ghana',c:'GH'},{n:'Panam\u00e1',c:'PA'}]}
 ];
 
-var state = {};
-GROUPS.forEach(function(g){ state[g.l]=[0,0,0,0]; });
-var terOrder = GROUPS.map(function(g){ return g.l; });
-var posLbl = ['','1\u00b0','2\u00b0','3\u00b0','\u00d7'];
-var posClass = ['','s1','s2','s3','s4'];
+// state grupos: 0=sin marcar, 1=1ro, 2=2do, 3=3ro
+var state={};
+GROUPS.forEach(function(g){state[g.l]=[0,0,0,0];});
+
+// terceros: array ordenado de {letter, n, c} segun el orden en que el usuario los toco
+// solo aparecen los grupos donde alguien tiene pos=3
+var terRanking=[]; // letras en orden de ranking (primer tocado = mejor tercero)
+
+var posLbl=['','1\u00b0','2\u00b0','3\u00b0'];
+var posClass=['','s1','s2','s3'];
 
 function buildGroups(){
-  var grid = document.getElementById('grid');
+  var grid=document.getElementById('grid');
   GROUPS.forEach(function(g){
-    var card = document.createElement('div');
-    card.className = 'gcard';
-    card.innerHTML = '<div class="ghdr"><span class="gl">'+g.l+'</span><span>GRUPO '+g.l+'</span></div>';
+    var card=document.createElement('div');
+    card.className='gcard';
+    card.innerHTML='<div class="ghdr"><span class="gl">'+g.l+'</span><span>GRUPO '+g.l+'</span></div>';
     g.teams.forEach(function(t,i){
-      var btn = document.createElement('button');
-      btn.className = 'team-btn';
-      btn.dataset.g = g.l; btn.dataset.i = i;
-      btn.innerHTML = '<span class="flag">'+flagImg(t.c)+'</span><span class="tname">'+t.n+'</span><span class="ring"></span>';
-      btn.addEventListener('click', function(){ onTeamClick(g.l, i); });
+      var btn=document.createElement('button');
+      btn.className='team-btn';
+      btn.dataset.g=g.l; btn.dataset.i=i;
+      btn.innerHTML='<span class="flag">'+flagImg(t.c)+'</span><span class="tname">'+t.n+'</span><span class="ring"></span>';
+      btn.addEventListener('click',function(){onTeamClick(g.l,i);});
       card.appendChild(btn);
     });
     grid.appendChild(card);
   });
 }
 
-function onTeamClick(letter, idx){
-  var grp = state[letter];
-  var cur = grp[idx];
-  var next = cur === 4 ? 0 : cur + 1;
-  if(next >= 1 && next <= 3){
-    var attempts = 0;
-    while(next >= 1 && next <= 3 && grp.some(function(v,j){ return j!==idx && v===next; }) && attempts<5){
-      next = next===3 ? 4 : next+1; attempts++;
+function onTeamClick(letter,idx){
+  var grp=state[letter];
+  var cur=grp[idx];
+  // cicla: 0->1->2->3->0 (sin eliminado)
+  var next=(cur+1)%4;
+  // posiciones 1,2,3 unicas por grupo
+  if(next>=1&&next<=3){
+    var attempts=0;
+    while(next>=1&&next<=3&&grp.some(function(v,j){return j!==idx&&v===next;})&&attempts<4){
+      next=(next%3)+1; attempts++;
     }
+    if(grp.some(function(v,j){return j!==idx&&v===next;})) next=0;
   }
-  grp[idx] = next;
+  // si antes era 3 y ahora no, quitarlo del ranking de terceros
+  if(cur===3&&next!==3){
+    terRanking=terRanking.filter(function(l){return l!==letter;});
+  }
+  grp[idx]=next;
+  // si ahora es 3, agregarlo al ranking si no esta ya
+  if(next===3&&terRanking.indexOf(letter)<0){
+    terRanking.push(letter);
+  }
   renderGroups();
-  updateTerceros();
+  renderTerceros();
 }
 
 function renderGroups(){
   GROUPS.forEach(function(g){
     g.teams.forEach(function(t,i){
-      var btn = document.querySelector('.team-btn[data-g="'+g.l+'"][data-i="'+i+'"]');
-      if(!btn) return;
-      var v = state[g.l][i];
-      btn.className = 'team-btn'+(v>0?' '+posClass[v]:'');
-      btn.querySelector('.ring').textContent = v>0 ? posLbl[v] : '';
+      var btn=document.querySelector('.team-btn[data-g="'+g.l+'"][data-i="'+i+'"]');
+      if(!btn)return;
+      var v=state[g.l][i];
+      btn.className='team-btn'+(v>0?' '+posClass[v]:'');
+      btn.querySelector('.ring').textContent=v>0?posLbl[v]:'';
     });
   });
 }
 
-function getThird(letter){
-  var g = GROUPS.find(function(x){ return x.l===letter; });
-  var idx = state[letter].indexOf(3);
-  if(idx<0) return null;
-  return {n:g.teams[idx].n, c:g.teams[idx].c, letter:letter};
+function getThirdTeam(letter){
+  var g=GROUPS.find(function(x){return x.l===letter;});
+  var idx=state[letter].indexOf(3);
+  if(idx<0)return null;
+  return {n:g.teams[idx].n,c:g.teams[idx].c,letter:letter};
 }
 
-function moveTerc(letter, dir){
-  var terceros = terOrder.map(function(l){ return getThird(l); }).filter(Boolean);
-  var pos = terceros.findIndex(function(t){ return t.letter===letter; });
-  var newPos = pos + dir;
-  if(newPos < 0 || newPos >= terceros.length) return;
-  // swap in terOrder
-  var idxA = terOrder.indexOf(letter);
-  var idxB = terOrder.indexOf(terceros[newPos].letter);
-  var tmp = terOrder[idxA]; terOrder[idxA]=terOrder[idxB]; terOrder[idxB]=tmp;
-  updateTerceros();
-}
+// terRanking = letras ya con pos asignada en orden de ranking
+// letters que tienen 3ro pero no estan en terRanking aun (pendientes de rankear)
+function renderTerceros(){
+  var list=document.getElementById('terList');
+  list.innerHTML='';
 
-function updateTerceros(){
-  var list = document.getElementById('terList');
-  list.innerHTML = '';
-  var terceros = terOrder.map(function(l){ return getThird(l); }).filter(Boolean);
-  if(!terceros.length){
-    list.innerHTML = '<div class="empty-t">Marca el 3\u00b0 lugar en cada grupo tocando hasta llegar a 3\u00b0 y aparece aqui automaticamente.</div>';
+  // todos los grupos que tienen 3ro marcado
+  var allThirds=GROUPS.map(function(g){
+    return getThirdTeam(g.l);
+  }).filter(Boolean);
+
+  if(!allThirds.length){
+    list.innerHTML='<div class="empty-t">Marca el 3\u00b0 lugar en cada grupo y aparecen aqui para rankear.</div>';
     return;
   }
-  terceros.forEach(function(t, i){
-    var adv = i<8;
-    var row = document.createElement('div');
-    row.className = 'ter-row';
-    row.innerHTML =
-      '<div class="move-btns">'+
-        '<button class="move-btn" onclick="moveTerc(\''+t.letter+'\',-1)" '+(i===0?'disabled':'')+'>&#8593;</button>'+
-        '<button class="move-btn" onclick="moveTerc(\''+t.letter+'\',1)" '+(i===terceros.length-1?'disabled':'')+'>&#8595;</button>'+
-      '</div>'+
-      '<span class="ter-rank '+(adv?'rank-a':'rank-o')+'">'+(i+1)+'</span>'+
+
+  // los que ya tienen ranking asignado (en orden)
+  var ranked=terRanking.map(function(l){return getThirdTeam(l);}).filter(Boolean);
+  // los que aun no tienen ranking (aparecen al final sin numero)
+  var unranked=allThirds.filter(function(t){return terRanking.indexOf(t.letter)<0;});
+
+  // mostrar ranked primero
+  ranked.forEach(function(t,i){
+    var adv=i<8;
+    var row=document.createElement('div');
+    row.className='ter-row '+(adv?'adv':'elim');
+    row.innerHTML=
+      '<div class="ter-pos '+(adv?'pos-adv':'pos-elim')+'">'+(i+1)+'</div>'+
       '<span class="ter-flag">'+flagImg(t.c,20)+'</span>'+
       '<span class="ter-name">'+t.n+'</span>'+
-      '<span class="ter-grp">GRP '+t.letter+'</span>'+
-      '<span class="ab '+(adv?'y':'n')+'">'+(adv?'CLASIFICA':'ELIMINADO')+'</span>';
+      '<span class="ter-grp">GRP '+t.letter+'</span>';
+    row.addEventListener('click',function(){onTerClick(t.letter);});
+    list.appendChild(row);
+  });
+
+  // luego los sin rankear (pending)
+  unranked.forEach(function(t){
+    var row=document.createElement('div');
+    row.className='ter-row pending';
+    row.innerHTML=
+      '<div class="ter-pos pos-unset">?</div>'+
+      '<span class="ter-flag">'+flagImg(t.c,20)+'</span>'+
+      '<span class="ter-name">'+t.n+'</span>'+
+      '<span class="ter-grp">GRP '+t.letter+'</span>';
+    row.addEventListener('click',function(){onTerClick(t.letter);});
     list.appendChild(row);
   });
 }
 
-function resetAll(){
-  GROUPS.forEach(function(g){ state[g.l]=[0,0,0,0]; });
-  terOrder = GROUPS.map(function(g){ return g.l; });
-  renderGroups(); updateTerceros();
+function onTerClick(letter){
+  var idx=terRanking.indexOf(letter);
+  if(idx>=0){
+    // ya tiene ranking: quitarlo (vuelve a pending)
+    terRanking.splice(idx,1);
+  } else {
+    // no tiene ranking: agregarlo al final del ranking
+    terRanking.push(letter);
+  }
+  renderTerceros();
 }
 
+function resetTerceros(){
+  terRanking=[];
+  renderTerceros();
+}
+
+function resetAll(){
+  GROUPS.forEach(function(g){state[g.l]=[0,0,0,0];});
+  terRanking=[];
+  renderGroups();
+  renderTerceros();
+}
+
+/* ---- compartir ---- */
 async function compartir(){
   document.getElementById('overlay').classList.add('show');
-  await new Promise(function(r){ setTimeout(r,100); });
-  try {
-    var dataUrl = await buildCanvas();
+  await new Promise(function(r){setTimeout(r,100);});
+  try{
+    var dataUrl=await buildCanvas();
     document.getElementById('overlay').classList.remove('show');
-    var blob = await (await fetch(dataUrl)).blob();
-    var file = new File([blob],'mundial2026.png',{type:'image/png'});
-    var isMob = /Android|iPhone|iPad/i.test(navigator.userAgent);
-    if(isMob && navigator.canShare && navigator.canShare({files:[file]})){
-      // solo imagen, sin texto
+    var blob=await (await fetch(dataUrl)).blob();
+    var file=new File([blob],'mundial2026.png',{type:'image/png'});
+    var isMob=/Android|iPhone|iPad/i.test(navigator.userAgent);
+    if(isMob&&navigator.canShare&&navigator.canShare({files:[file]})){
       await navigator.share({files:[file]});
     } else {
-      var a=document.createElement('a'); a.download='mundial2026.png'; a.href=dataUrl; a.click();
-      setTimeout(function(){ window.open('https://wa.me/','_blank'); },800);
+      var a=document.createElement('a');a.download='mundial2026.png';a.href=dataUrl;a.click();
+      setTimeout(function(){window.open('https://wa.me/','_blank');},800);
     }
-  } catch(err){
+  }catch(err){
     document.getElementById('overlay').classList.remove('show');
   }
 }
 
-var imgCache = {};
+/* ---- canvas ---- */
+var imgCache={};
 function loadImg(code){
   return new Promise(function(res){
-    if(imgCache[code]){ res(imgCache[code]); return; }
-    var src = OVERRIDE[code] ? OVERRIDE[code] : (TWEMOJI+(FLAGMAP[code]||'')+'.png');
-    if(!FLAGMAP[code] && !OVERRIDE[code]){ res(null); return; }
-    var img=new Image(); img.crossOrigin='anonymous';
-    img.onload=function(){ imgCache[code]=img; res(img); };
-    img.onerror=function(){ res(null); };
+    if(imgCache[code]){res(imgCache[code]);return;}
+    var src=OVERRIDE[code]?OVERRIDE[code]:(TWEMOJI+(FLAGMAP[code]||'')+'.png');
+    if(!OVERRIDE[code]&&!FLAGMAP[code]){res(null);return;}
+    var img=new Image();img.crossOrigin='anonymous';
+    img.onload=function(){imgCache[code]=img;res(img);};
+    img.onerror=function(){res(null);};
     img.src=src;
   });
 }
@@ -309,19 +381,19 @@ function buildCanvas(){
   return new Promise(function(resolve){
     var W=900,pad=22,cols=4,colW=(W-pad*2-(cols-1)*10)/cols;
     var rowH=24,hdrH=38,groupH=hdrH+4*rowH+14;
-    var terceros=terOrder.map(function(l){ return getThird(l); }).filter(Boolean);
-    var terH=terceros.length?54+terceros.length*30+16:0;
+    var ranked=terRanking.map(function(l){return getThirdTeam(l);}).filter(Boolean);
+    var terH=ranked.length?54+ranked.length*30+16:0;
     var totalH=pad+68+3*(groupH+12)+terH+36;
     var cv=document.getElementById('cv');
-    cv.width=W; cv.height=totalH;
+    cv.width=W;cv.height=totalH;
     var ctx=cv.getContext('2d');
-    ctx.fillStyle='#0a0e1a'; ctx.fillRect(0,0,W,totalH);
+    ctx.fillStyle='#0a0e1a';ctx.fillRect(0,0,W,totalH);
     var grd=ctx.createRadialGradient(W*.2,0,0,W*.2,0,W*.6);
-    grd.addColorStop(0,'rgba(26,86,219,.18)'); grd.addColorStop(1,'transparent');
-    ctx.fillStyle=grd; ctx.fillRect(0,0,W,totalH);
-    ctx.fillStyle='#00c85a'; ctx.font='bold 38px sans-serif'; ctx.textAlign='center';
+    grd.addColorStop(0,'rgba(26,86,219,.18)');grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,totalH);
+    ctx.fillStyle='#00c85a';ctx.font='bold 38px sans-serif';ctx.textAlign='center';
     ctx.fillText('MUNDIAL 2026',W/2,46);
-    ctx.fillStyle='#8a94a8'; ctx.font='12px sans-serif';
+    ctx.fillStyle='#8a94a8';ctx.font='12px sans-serif';
     ctx.fillText('CLASIFICADOS - FASE DE GRUPOS',W/2,64);
 
     function rr(x,y,w,h,r,fill,stroke){
@@ -333,10 +405,10 @@ function buildCanvas(){
       if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=.5;ctx.stroke();}
     }
 
-    var posColors=['','#00c85a','#1a56db','#f5a623','#e53935'];
+    var posColors=['','#00c85a','#1a56db','#f5a623'];
     var allCodes=[];
-    GROUPS.forEach(function(g){ g.teams.forEach(function(t){ allCodes.push(t.c); }); });
-    terceros.forEach(function(t){ allCodes.push(t.c); });
+    GROUPS.forEach(function(g){g.teams.forEach(function(t){allCodes.push(t.c);});});
+    ranked.forEach(function(t){allCodes.push(t.c);});
 
     Promise.all(allCodes.map(loadImg)).then(function(){
       GROUPS.forEach(function(g,idx){
@@ -357,35 +429,37 @@ function buildCanvas(){
         g.teams.forEach(function(t,ti){
           var pos=state[g.l][ti],ey=y+hdrH+ti*rowH+16;
           var fi=imgCache[t.c];
-          if(fi) ctx.drawImage(fi,x+6,ey-14,18,18);
+          if(fi)ctx.drawImage(fi,x+6,ey-14,18,18);
           else{ctx.fillStyle='#8a94a8';ctx.font='9px sans-serif';ctx.fillText(t.c,x+6,ey);}
           ctx.fillStyle=pos>0?'#f0f2f8':'#3a4255';
           ctx.font='11px sans-serif';
           var nm=t.n;
-          while(ctx.measureText(nm).width>colW-66&&nm.length>3) nm=nm.slice(0,-1)+'...';
-          ctx.textAlign='left'; ctx.fillText(nm,x+30,ey);
+          while(ctx.measureText(nm).width>colW-66&&nm.length>3)nm=nm.slice(0,-1)+'...';
+          ctx.textAlign='left';ctx.fillText(nm,x+30,ey);
           if(pos>0){
             ctx.fillStyle=posColors[pos];ctx.font='bold 10px sans-serif';ctx.textAlign='right';
-            ctx.fillText(pos===4?'x':posLbl[pos],x+colW-7,ey);
-            ctx.textAlign='left';
+            ctx.fillText(posLbl[pos],x+colW-7,ey);ctx.textAlign='left';
           }
         });
       });
-      if(terceros.length){
+
+      if(ranked.length){
         var ty=pad+78+3*(groupH+12)+10;
         ctx.fillStyle='#f5a623';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
         ctx.fillText('MEJORES TERCEROS',pad,ty+18);
         ctx.strokeStyle='rgba(245,166,35,.3)';ctx.lineWidth=.5;
         ctx.beginPath();ctx.moveTo(pad+185,ty+13);ctx.lineTo(W-pad,ty+13);ctx.stroke();
-        terceros.forEach(function(t,i){
+        ranked.forEach(function(t,i){
           var ry=ty+44+i*30,adv=i<8;
           rr(pad,ry-18,W-pad*2,26,5,adv?'rgba(0,200,90,.07)':'rgba(229,57,53,.07)','transparent');
-          ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
-          ctx.fillText(i+1,pad+8,ry);
+          // caja numero
+          rr(pad+4,ry-14,22,22,4,adv?'#00c85a':'#e53935','transparent');
+          ctx.fillStyle='#000';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+          ctx.fillText(i+1,pad+15,ry);
           var fi=imgCache[t.c];
-          if(fi) ctx.drawImage(fi,pad+28,ry-14,18,18);
-          ctx.fillStyle='#f0f2f8';ctx.font='500 12px sans-serif';
-          ctx.fillText(t.n,pad+52,ry);
+          if(fi)ctx.drawImage(fi,pad+30,ry-14,18,18);
+          ctx.fillStyle='#f0f2f8';ctx.font='500 12px sans-serif';ctx.textAlign='left';
+          ctx.fillText(t.n,pad+54,ry);
           ctx.fillStyle='#8a94a8';ctx.font='10px sans-serif';ctx.textAlign='right';
           ctx.fillText('GRP '+t.letter,W-pad-90,ry);
           ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='bold 10px sans-serif';
@@ -393,6 +467,7 @@ function buildCanvas(){
           ctx.textAlign='left';
         });
       }
+
       ctx.fillStyle='#2a3040';ctx.font='10px sans-serif';ctx.textAlign='center';
       ctx.fillText('davidvalencia13.github.io/Mundial2026  -  '+new Date().toLocaleDateString('es-EC'),W/2,totalH-10);
       resolve(cv.toDataURL('image/png'));
@@ -401,7 +476,7 @@ function buildCanvas(){
 }
 
 buildGroups();
-updateTerceros();
+renderTerceros();
 </script>
 </body>
 </html>
