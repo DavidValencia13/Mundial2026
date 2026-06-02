@@ -29,21 +29,15 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 .sec{font-family:var(--display);font-size:18px;letter-spacing:1px;color:var(--txt2);
   margin:1.75rem 0 .875rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .sec::after{content:'';flex:1;height:1px;background:var(--bd);min-width:20px}
-.sec-hint{font-family:var(--body);font-size:11px;font-weight:400;color:var(--txt2);
-  letter-spacing:0;text-transform:none;opacity:.7}
+.sec-hint{font-family:var(--body);font-size:11px;font-weight:400;color:var(--txt2);letter-spacing:0;text-transform:none;opacity:.7}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-.gcard{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.gcard{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.gcard.error{border-color:var(--red)!important}
 .ghdr{background:var(--bg3);padding:7px 13px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--bd)}
 .gl{font-family:var(--display);font-size:20px;color:var(--green);line-height:1}
 .ghdr span{font-size:11px;font-weight:500;color:var(--txt2);letter-spacing:1px;text-transform:uppercase}
-
-/* botones de equipo en grupos */
-.team-btn{
-  width:100%;display:flex;align-items:center;gap:10px;
-  padding:8px 13px;border:none;background:transparent;cursor:pointer;
-  border-bottom:1px solid var(--bd);transition:background .15s;text-align:left;
-  color:var(--txt);font-family:var(--body);font-size:13px;font-weight:400
-}
+.team-btn{width:100%;display:flex;align-items:center;gap:10px;padding:8px 13px;border:none;background:transparent;cursor:pointer;
+  border-bottom:1px solid var(--bd);transition:background .15s;text-align:left;color:var(--txt);font-family:var(--body);font-size:13px;font-weight:400}
 .team-btn:last-child{border-bottom:none}
 .team-btn:hover{background:rgba(255,255,255,.04)}
 .team-btn.s1{background:rgba(0,200,90,.15)!important}
@@ -51,64 +45,55 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
 .team-btn.s3{background:rgba(245,166,35,.15)!important}
 .flag{font-size:22px;line-height:1;min-width:28px;text-align:center;display:flex;align-items:center}
 .tname{flex:1;font-size:13px}
-.ring{
-  width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;color:transparent;flex-shrink:0;transition:all .2s
-}
+.ring{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:transparent;flex-shrink:0;transition:all .2s}
 .s1 .ring{background:var(--green);border-color:var(--green);color:#000}
 .s2 .ring{background:var(--blue);border-color:var(--blue);color:#fff}
 .s3 .ring{background:var(--gold);border-color:var(--gold);color:#000}
-
-/* seccion terceros */
 .ter-wrap{margin-top:1.5rem}
 .ter-info{font-size:12px;color:var(--txt2);background:rgba(245,166,35,.07);
   border:1px solid rgba(245,166,35,.2);border-radius:var(--r);padding:10px 14px;margin-bottom:10px}
 .ter-list{display:flex;flex-direction:column;gap:5px}
-
-/* cada fila de tercero — clickeable */
-.ter-row{
-  display:flex;align-items:center;gap:10px;
-  border-radius:8px;padding:9px 13px;cursor:pointer;
-  border:1px solid var(--bd);background:var(--bg2);
-  transition:background .15s,border-color .15s;
-  user-select:none;
-}
+.ter-row{display:flex;align-items:center;gap:10px;border-radius:8px;padding:9px 13px;cursor:pointer;
+  border:1px solid var(--bd);background:var(--bg2);transition:background .15s,border-color .15s;user-select:none}
 .ter-row:hover{background:rgba(255,255,255,.04)}
-/* clasificados (1-8) */
 .ter-row.adv{background:rgba(0,200,90,.07);border-color:rgba(0,200,90,.2)}
 .ter-row.adv:hover{background:rgba(0,200,90,.12)}
-/* eliminados (9-12) */
-.ter-row.elim{background:rgba(229,57,53,.05);border-color:rgba(229,57,53,.15)}
-.ter-row.elim:hover{background:rgba(229,57,53,.1)}
-/* sin asignar posicion */
 .ter-row.pending{opacity:.6}
 .ter-row.pending:hover{opacity:1}
-
-/* numero de posicion — caja cuadrada estilo foto */
-.ter-pos{
-  width:28px;height:28px;border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-size:16px;flex-shrink:0;
-  transition:all .2s;
-}
+.ter-pos{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:16px;flex-shrink:0;transition:all .2s}
 .pos-unset{background:rgba(255,255,255,.06);color:var(--txt2)}
 .pos-adv{background:var(--green);color:#000}
-.pos-elim{background:var(--red);color:#fff}
-
 .ter-flag{display:flex;align-items:center;flex-shrink:0}
 .ter-name{flex:1;font-size:13px;font-weight:500}
-.ter-grp{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--txt2);
-  background:var(--bg3);padding:2px 7px;border-radius:4px;flex-shrink:0}
-
+.ter-grp{font-size:10px;font-weight:600;letter-spacing:1px;color:var(--txt2);background:var(--bg3);padding:2px 7px;border-radius:4px;flex-shrink:0}
 .empty-t{font-size:13px;color:var(--txt2);padding:10px 0;font-style:italic}
-.reset-row{display:flex;justify-content:flex-end;margin-bottom:.5rem;gap:8px}
-.btn-reset{background:transparent;color:var(--txt2);border:1px solid var(--bd);
-  padding:5px 14px;border-radius:6px;font-family:var(--body);font-size:12px;cursor:pointer}
+.reset-row{display:flex;justify-content:flex-end;margin-bottom:.5rem}
+.btn-reset{background:transparent;color:var(--txt2);border:1px solid var(--bd);padding:5px 14px;border-radius:6px;font-family:var(--body);font-size:12px;cursor:pointer}
 .btn-reset:hover{border-color:rgba(255,255,255,.2);color:var(--txt)}
-.btn-reset-ter{background:transparent;color:var(--txt2);border:1px solid var(--bd);
-  padding:4px 10px;border-radius:6px;font-family:var(--body);font-size:11px;cursor:pointer;margin-left:8px}
+.btn-reset-ter{background:transparent;color:var(--txt2);border:1px solid var(--bd);padding:4px 10px;border-radius:6px;font-family:var(--body);font-size:11px;cursor:pointer;margin-left:8px}
 .btn-reset-ter:hover{border-color:rgba(255,255,255,.2);color:var(--txt)}
+
+/* seccion nombre + error */
+.name-section{background:var(--bg2);border:1px solid rgba(245,166,35,.3);border-radius:var(--r);
+  padding:1.25rem 1.5rem;margin-top:2rem;text-align:center;transition:border-color .2s}
+.name-section.error{border-color:var(--red)!important}
+.name-section p{font-size:13px;color:var(--gold);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.name-input{background:var(--bg3);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;
+  font-family:var(--body);font-size:15px;color:var(--txt);width:100%;max-width:340px;text-align:center;outline:none;transition:border-color .2s}
+.name-input:focus{border-color:var(--gold)}
+.name-input.error{border-color:var(--red)!important}
+.name-input::placeholder{color:var(--txt2)}
+
+/* caja de error inline */
+.err-box{display:none;margin-top:1.5rem;background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.35);
+  border-radius:var(--r);padding:14px 18px}
+.err-box.show{display:block}
+.err-box-title{font-size:13px;font-weight:600;color:var(--red);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.err-box ul{list-style:none;padding:0;margin:0}
+.err-box ul li{font-size:12px;color:#f0a0a0;padding:3px 0;padding-left:14px;position:relative}
+.err-box ul li::before{content:'›';position:absolute;left:0;color:var(--red)}
 
 .share-fixed{position:sticky;bottom:1.5rem;display:flex;justify-content:center;margin-top:2rem;z-index:10;pointer-events:none}
 .btn-share{background:var(--green);color:#000;border:none;padding:14px 32px;border-radius:50px;
@@ -116,16 +101,9 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
   box-shadow:0 4px 24px rgba(0,200,90,.35);transition:background .15s,transform .1s;pointer-events:all}
 .btn-share:hover{background:var(--green-dk)}
 .btn-share:active{transform:scale(.97)}
-.name-section{background:var(--bg2);border:1px solid rgba(245,166,35,.3);border-radius:var(--r);padding:1.25rem 1.5rem;margin-top:2rem;text-align:center}
-.name-section p{font-size:13px;color:var(--gold);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
-.name-input{background:var(--bg3);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;font-family:var(--body);font-size:15px;color:var(--txt);width:100%;max-width:340px;text-align:center;outline:none}
-.name-input:focus{border-color:var(--gold)}
-.name-input::placeholder{color:var(--txt2)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
-  align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:16px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:16px}
 .overlay.show{display:flex}
-.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.1);
-  border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .overlay p{color:var(--txt2);font-size:13px}
 canvas{display:none}
@@ -152,9 +130,17 @@ canvas{display:none}
     <div class="ter-info">Toca los paises en el orden que clasificaron: 1er toque = mejor tercero, 2do toque = segundo mejor, etc. Toca de nuevo para quitar.</div>
     <div class="ter-list" id="terList"></div>
   </div>
-  <div class="name-section">
-  <p>&#9998; Escribe tu nombre para poder compartir</p>
-  <input class="name-input" id="userName" type="text" placeholder="Tu nombre aqui..." maxlength="30">
+
+  <!-- caja de errores inline -->
+  <div class="err-box" id="errBox">
+    <div class="err-box-title">&#9888; Completa lo siguiente antes de compartir:</div>
+    <ul id="errList"></ul>
+  </div>
+
+  <div class="name-section" id="nameSection">
+    <p>&#9998; Escribe tu nombre para poder compartir</p>
+    <input class="name-input" id="userName" type="text" placeholder="Tu nombre aqui..." maxlength="30"
+      oninput="clearErrors()">
   </div>
   <div class="share-fixed">
     <button class="btn-share" onclick="compartir()">&#128172; Compartir en WhatsApp</button>
@@ -162,8 +148,8 @@ canvas{display:none}
 </div>
 <canvas id="cv"></canvas>
 <script>
-var TWEMOJI = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/';
-var FLAGMAP = {
+var TWEMOJI='https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/';
+var FLAGMAP={
   'MX':'1f1f2-1f1fd','KR':'1f1f0-1f1f7','ZA':'1f1ff-1f1e6','CZ':'1f1e8-1f1ff',
   'CA':'1f1e8-1f1e6','CH':'1f1e8-1f1ed','QA':'1f1f6-1f1e6','BA':'1f1e7-1f1e6',
   'BR':'1f1e7-1f1f7','MA':'1f1f2-1f1e6','HT':'1f1ed-1f1f9',
@@ -177,7 +163,7 @@ var FLAGMAP = {
   'PT':'1f1f5-1f1f9','CO':'1f1e8-1f1f4','UZ':'1f1fa-1f1ff','CD':'1f1e8-1f1e9',
   'HR':'1f1ed-1f1f7','GH':'1f1ec-1f1ed','PA':'1f1f5-1f1e6'
 };
-var OVERRIDE = {
+var OVERRIDE={
   'SCT':'https://flagcdn.com/w40/gb-sct.png',
   'ENG':'https://flagcdn.com/w40/gb-eng.png'
 };
@@ -204,14 +190,9 @@ var GROUPS=[
   {l:'L',teams:[{n:'Inglaterra',c:'ENG'},{n:'Croacia',c:'HR'},{n:'Ghana',c:'GH'},{n:'Panam\u00e1',c:'PA'}]}
 ];
 
-// state grupos: 0=sin marcar, 1=1ro, 2=2do, 3=3ro
 var state={};
 GROUPS.forEach(function(g){state[g.l]=[0,0,0,0];});
-
-// terceros: array ordenado de {letter, n, c} segun el orden en que el usuario los toco
-// solo aparecen los grupos donde alguien tiene pos=3
-var terRanking=[]; // letras en orden de ranking (primer tocado = mejor tercero)
-
+var terRanking=[];
 var posLbl=['','1\u00b0','2\u00b0','3\u00b0'];
 var posClass=['','s1','s2','s3'];
 
@@ -220,11 +201,12 @@ function buildGroups(){
   GROUPS.forEach(function(g){
     var card=document.createElement('div');
     card.className='gcard';
+    card.id='gcard-'+g.l;
     card.innerHTML='<div class="ghdr"><span class="gl">'+g.l+'</span><span>GRUPO '+g.l+'</span></div>';
     g.teams.forEach(function(t,i){
       var btn=document.createElement('button');
       btn.className='team-btn';
-      btn.dataset.g=g.l; btn.dataset.i=i;
+      btn.dataset.g=g.l;btn.dataset.i=i;
       btn.innerHTML='<span class="flag">'+flagImg(t.c)+'</span><span class="tname">'+t.n+'</span><span class="ring"></span>';
       btn.addEventListener('click',function(){onTeamClick(g.l,i);});
       card.appendChild(btn);
@@ -236,22 +218,24 @@ function buildGroups(){
 function onTeamClick(letter,idx){
   var grp=state[letter];
   var cur=grp[idx];
-  // cicla: 0->1->2->3->0 (sin eliminado)
   var next=(cur+1)%4;
-  // posiciones 1,2,3 unicas por grupo
   if(next>=1&&next<=3){
     var attempts=0;
     while(next>=1&&next<=3&&grp.some(function(v,j){return j!==idx&&v===next;})&&attempts<4){
-      next=(next%3)+1; attempts++;
+      next=(next%3)+1;attempts++;
     }
-    if(grp.some(function(v,j){return j!==idx&&v===next;})) next=0;
+    if(grp.some(function(v,j){return j!==idx&&v===next;}))next=0;
   }
-  // si antes era 3 y ahora no, quitarlo del ranking de terceros
   if(cur===3&&next!==3){
     terRanking=terRanking.filter(function(l){return l!==letter;});
   }
   grp[idx]=next;
-
+  // quitar error del grupo si ya tiene 1 y 2
+  var s=state[letter];
+  if(s.indexOf(1)>=0&&s.indexOf(2)>=0){
+    var card=document.getElementById('gcard-'+letter);
+    if(card)card.classList.remove('error');
+  }
   renderGroups();
   renderTerceros();
 }
@@ -275,42 +259,27 @@ function getThirdTeam(letter){
   return {n:g.teams[idx].n,c:g.teams[idx].c,letter:letter};
 }
 
-// terRanking = letras ya con pos asignada en orden de ranking
-// letters que tienen 3ro pero no estan en terRanking aun (pendientes de rankear)
 function renderTerceros(){
   var list=document.getElementById('terList');
   list.innerHTML='';
-
-  // todos los grupos que tienen 3ro marcado
-  var allThirds=GROUPS.map(function(g){
-    return getThirdTeam(g.l);
-  }).filter(Boolean);
-
+  var allThirds=GROUPS.map(function(g){return getThirdTeam(g.l);}).filter(Boolean);
   if(!allThirds.length){
     list.innerHTML='<div class="empty-t">Marca el 3\u00b0 lugar en cada grupo y aparecen aqui para rankear.</div>';
     return;
   }
-
-  // los que ya tienen ranking asignado (en orden)
   var ranked=terRanking.map(function(l){return getThirdTeam(l);}).filter(Boolean);
-  // los que aun no tienen ranking (aparecen al final sin numero)
   var unranked=allThirds.filter(function(t){return terRanking.indexOf(t.letter)<0;});
-
-  // mostrar ranked primero
   ranked.forEach(function(t,i){
-    var adv=i<8;
     var row=document.createElement('div');
-    row.className='ter-row '+(adv?'adv':'elim');
+    row.className='ter-row adv';
     row.innerHTML=
-      '<div class="ter-pos '+(adv?'pos-adv':'pos-elim')+'">'+(i+1)+'</div>'+
+      '<div class="ter-pos pos-adv">'+(i+1)+'</div>'+
       '<span class="ter-flag">'+flagImg(t.c,20)+'</span>'+
       '<span class="ter-name">'+t.n+'</span>'+
       '<span class="ter-grp">GRP '+t.letter+'</span>';
     row.addEventListener('click',function(){onTerClick(t.letter);});
     list.appendChild(row);
   });
-
-  // luego los sin rankear (pending)
   unranked.forEach(function(t){
     var row=document.createElement('div');
     row.className='ter-row pending';
@@ -329,42 +298,80 @@ function onTerClick(letter){
   if(idx>=0){
     terRanking.splice(idx,1);
   } else {
-    if(terRanking.length>=8) return;
+    if(terRanking.length>=8)return;
     terRanking.push(letter);
   }
+  // quitar error de terceros si ya hay 8
+  if(terRanking.length>=8) document.getElementById('errBox').classList.remove('show');
   renderTerceros();
 }
 
-function resetTerceros(){
-  terRanking=[];
-  renderTerceros();
-}
+function resetTerceros(){terRanking=[];renderTerceros();}
 
 function resetAll(){
   GROUPS.forEach(function(g){state[g.l]=[0,0,0,0];});
   terRanking=[];
-  renderGroups();
-  renderTerceros();
+  document.querySelectorAll('.gcard').forEach(function(c){c.classList.remove('error');});
+  document.getElementById('errBox').classList.remove('show');
+  document.getElementById('nameSection').classList.remove('error');
+  document.getElementById('userName').classList.remove('error');
+  renderGroups();renderTerceros();
 }
 
-/* ---- compartir ---- */
+function clearErrors(){
+  document.getElementById('userName').classList.remove('error');
+  document.getElementById('nameSection').classList.remove('error');
+  document.getElementById('errBox').classList.remove('show');
+}
+
+/* ---- validar y compartir ---- */
 async function compartir(){
+  var errores=[];
+  // limpiar errores visuales anteriores
+  document.querySelectorAll('.gcard').forEach(function(c){c.classList.remove('error');});
+  document.getElementById('userName').classList.remove('error');
+  document.getElementById('nameSection').classList.remove('error');
+
+  // 1. nombre
   var nombre=document.getElementById('userName').value.trim();
-  if(!nombre){document.getElementById('userName').focus();document.getElementById('userName').style.borderColor='var(--red)';return;}
-  // validar que todos los grupos tengan 1ro y 2do
+  if(!nombre){
+    errores.push('Escribe tu nombre abajo para identificar tu prediccion');
+    document.getElementById('userName').classList.add('error');
+    document.getElementById('nameSection').classList.add('error');
+  }
+
+  // 2. grupos sin 1ro o 2do
   var faltanGrupos=[];
   GROUPS.forEach(function(g){
-  var s=state[g.l];
-  if(s.indexOf(1)<0||s.indexOf(2)<0) faltanGrupos.push('Grupo '+g.l);
+    var s=state[g.l];
+    if(s.indexOf(1)<0||s.indexOf(2)<0){
+      faltanGrupos.push('Grupo '+g.l);
+      document.getElementById('gcard-'+g.l).classList.add('error');
+    }
   });
   if(faltanGrupos.length>0){
-  alert('Faltan clasificados en: '+faltanGrupos.join(', '));return;
+    errores.push('Faltan 1\u00b0 y 2\u00b0 lugar en: '+faltanGrupos.join(', '));
   }
-// validar que haya exactamente 8 terceros rankeados
-var totalTerceros=GROUPS.filter(function(g){return state[g.l].indexOf(3)>=0;}).length;
-if(totalTerceros<8||terRanking.length<8){
-  alert('Debes elegir el 3er lugar en minimo 8 grupos y ordenarlos en la tabla de abajo. Tienes '+totalTerceros+' terceros marcados y '+terRanking.length+' ordenados.');return;
-}
+
+  // 3. terceros
+  var totalTerceros=GROUPS.filter(function(g){return state[g.l].indexOf(3)>=0;}).length;
+  if(totalTerceros<8||terRanking.length<8){
+    errores.push('Debes marcar el 3\u00b0 en minimo 8 grupos y ordenar los 8 mejores terceros abajo (tienes '+terRanking.length+' ordenados)');
+  }
+
+  if(errores.length>0){
+    var box=document.getElementById('errBox');
+    var list=document.getElementById('errList');
+    list.innerHTML='';
+    errores.forEach(function(e){
+      var li=document.createElement('li');li.textContent=e;list.appendChild(li);
+    });
+    box.classList.add('show');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+
+  document.getElementById('errBox').classList.remove('show');
   document.getElementById('overlay').classList.add('show');
   await new Promise(function(r){setTimeout(r,100);});
   try{
@@ -417,7 +424,7 @@ function buildCanvas(){
     ctx.fillText('MUNDIAL 2026',W/2,46);
     ctx.fillStyle='#f0f2f8';ctx.font='500 15px sans-serif';ctx.textAlign='left';
     ctx.fillText(nombre,pad,42);
-    ctx.fillStyle='#8a94a8';ctx.font='12px sans-serif';
+    ctx.fillStyle='#8a94a8';ctx.font='12px sans-serif';ctx.textAlign='center';
     ctx.fillText('CLASIFICADOS - FASE DE GRUPOS',W/2,64);
 
     function rr(x,y,w,h,r,fill,stroke){
@@ -466,7 +473,6 @@ function buildCanvas(){
           }
         });
       });
-
       if(ranked.length){
         var ty=pad+78+3*(groupH+12)+10;
         ctx.fillStyle='#f5a623';ctx.font='bold 15px sans-serif';ctx.textAlign='left';
@@ -475,9 +481,8 @@ function buildCanvas(){
         ctx.beginPath();ctx.moveTo(pad+185,ty+13);ctx.lineTo(W-pad,ty+13);ctx.stroke();
         ranked.forEach(function(t,i){
           var ry=ty+44+i*30,adv=i<8;
-          rr(pad,ry-18,W-pad*2,26,5,adv?'rgba(0,200,90,.07)':'rgba(229,57,53,.07)','transparent');
-          // caja numero
-          rr(pad+4,ry-14,22,22,4,adv?'#00c85a':'#e53935','transparent');
+          rr(pad,ry-18,W-pad*2,26,5,'rgba(0,200,90,.07)','transparent');
+          rr(pad+4,ry-14,22,22,4,'#00c85a','transparent');
           ctx.fillStyle='#000';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
           ctx.fillText(i+1,pad+15,ry);
           var fi=imgCache[t.c];
@@ -486,12 +491,11 @@ function buildCanvas(){
           ctx.fillText(t.n,pad+54,ry);
           ctx.fillStyle='#8a94a8';ctx.font='10px sans-serif';ctx.textAlign='right';
           ctx.fillText('GRP '+t.letter,W-pad-90,ry);
-          ctx.fillStyle=adv?'#00c85a':'#e53935';ctx.font='bold 10px sans-serif';
-          ctx.fillText(adv?'CLASIFICA':'ELIMINADO',W-pad-8,ry);
+          ctx.fillStyle='#00c85a';ctx.font='bold 10px sans-serif';
+          ctx.fillText('CLASIFICA',W-pad-8,ry);
           ctx.textAlign='left';
         });
       }
-
       ctx.fillStyle='#2a3040';ctx.font='10px sans-serif';ctx.textAlign='center';
       ctx.fillText('davidvalencia13.github.io/Mundial2026  -  '+new Date().toLocaleDateString('es-EC'),W/2,totalH-10);
       resolve(cv.toDataURL('image/png'));
