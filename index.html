@@ -116,6 +116,11 @@ body{background:var(--bg);color:var(--txt);font-family:var(--body);min-height:10
   box-shadow:0 4px 24px rgba(0,200,90,.35);transition:background .15s,transform .1s;pointer-events:all}
 .btn-share:hover{background:var(--green-dk)}
 .btn-share:active{transform:scale(.97)}
+.name-section{background:var(--bg2);border:1px solid rgba(245,166,35,.3);border-radius:var(--r);padding:1.25rem 1.5rem;margin-top:2rem;text-align:center}
+.name-section p{font-size:13px;color:var(--gold);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.name-input{background:var(--bg3);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;font-family:var(--body);font-size:15px;color:var(--txt);width:100%;max-width:340px;text-align:center;outline:none}
+.name-input:focus{border-color:var(--gold)}
+.name-input::placeholder{color:var(--txt2)}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
   align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:16px}
 .overlay.show{display:flex}
@@ -146,6 +151,10 @@ canvas{display:none}
     </div>
     <div class="ter-info">Toca los paises en el orden que clasificaron: 1er toque = mejor tercero, 2do toque = segundo mejor, etc. Toca de nuevo para quitar.</div>
     <div class="ter-list" id="terList"></div>
+  </div>
+  <div class="name-section">
+  <p>&#9998; Escribe tu nombre para poder compartir</p>
+  <input class="name-input" id="userName" type="text" placeholder="Tu nombre aqui..." maxlength="30">
   </div>
   <div class="share-fixed">
     <button class="btn-share" onclick="compartir()">&#128172; Compartir en WhatsApp</button>
@@ -340,6 +349,8 @@ function resetAll(){
 
 /* ---- compartir ---- */
 async function compartir(){
+  var nombre=document.getElementById('userName').value.trim();
+  if(!nombre){document.getElementById('userName').focus();document.getElementById('userName').style.borderColor='var(--red)';return;}
   document.getElementById('overlay').classList.add('show');
   await new Promise(function(r){setTimeout(r,100);});
   try{
